@@ -1104,7 +1104,9 @@ async function pullCloudState(){
   const localStamp = localState && localState._localChangedAt
     ? Number(localState._localChangedAt) : 0;
 
-  if (localState && localStamp > cloudStamp) {
+  /* Only a genuinely unsynced local edit may win over cloud. A clean local
+     cache must never overwrite cloud just because its device clock is ahead. */
+  if (localState && localStamp > 0) {
     state = localState;
     await pushCloudState();
     return;
@@ -1169,6 +1171,18 @@ async function initCloudSync(){
           setSyncButtonState();
         }
       });
+
+    /* Realtime is not reliable when an HTML file is opened locally, so also
+       poll the shared row. This makes iPad/Safari and desktop stay aligned. */
+    setInterval(async function(){
+      if (!cloudSyncEnabled || cloudSyncBusy || Number(state._localChangedAt || 0)) return;
+      try {
+        await pullCloudState();
+        setSyncStatus("☁️ Synced", "ok");
+      } catch(err) {
+        console.warn("Cloud refresh failed:", err);
+      }
+    }, CLOUD_PULL_INTERVAL);
 
   } catch(err) {
     console.error("Cloud sync setup failed:", err);
