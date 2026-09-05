@@ -1497,7 +1497,7 @@ function setSpeech(mood, forceRandom){
 function updateCatMood(){
   var mood = catMood();
   var cat = document.getElementById("catSvg");
-  cat.className = "cat-svg mood-"+mood;
+  cat.setAttribute("class", "cat-svg mood-"+mood);
   setSpeech(mood, false);
   var dragon = document.getElementById("dragonSvg");
   if(dragon){ dragon.classList.toggle("awake", mood==="happy" || mood==="cheer"); }
@@ -2056,6 +2056,10 @@ function renderAll(){
   renderGarden();
   updateNightCourtProgress();
 }
+window.manualCloudSync = manualCloudSync;
+window.initCloudSync = initCloudSync;
+window.initSyncCodeUI = initSyncCodeUI;
+
 renderAll();
 window.addEventListener("load", function(){
   setTimeout(function(){
