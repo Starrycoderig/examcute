@@ -1009,6 +1009,8 @@ let cloudSyncEnabled = false;
 let cloudSyncTimer = null;
 let cloudSyncBusy = false;
 let lastCloudUpdatedAt = null;
+/* Poll cloud every 4 seconds as a reliable fallback for GitHub Pages/iPad/Safari. */
+const CLOUD_PULL_INTERVAL = 4000;
 
 function setSyncStatus(message, kind){
   const el = document.getElementById("syncStatus");
