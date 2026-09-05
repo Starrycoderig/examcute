@@ -1,0 +1,2051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Become the Professor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;700&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IM+Fell+English:ital@0;1&family=MedievalSharp&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* ✦ enchanted storybook palette — midnight violet night, warm illuminated parchment ✦ */
+    --sky-top: #241748;
+    --sky-bot: #100a20;
+    --cream: #f6ecd6;
+    --paper: #f4e7c9;
+    --ink: #2f2140;
+    --ink-soft: #6a5a86;
+    --sage: #7c5bb0;
+    --sage-dark: #55397e;
+    --sage-light: #ded0f2;
+    --terracotta: #a8355c;
+    --terracotta-dark: #7a1f3f;
+    --mustard: #c9a24d;
+    --blush: #d19bc4;
+    --sky-blue: #8f9fd4;
+    --line: rgba(47,33,64,0.20);
+    --line-soft: rgba(47,33,64,0.10);
+    --dusk-deep: #0d0918;
+    --dusk-mid: #1b1434;
+    --dusk-warm: #2c2050;
+    --gold-glow: rgba(201,162,77,.55);
+    --violet-glow: rgba(124,91,176,.45);
+  }
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; color:var(--ink); font-family:'EB Garamond','Cormorant Garamond',Georgia,serif; font-size:1.05rem;
+    -webkit-font-smoothing:antialiased; padding-bottom:70px; touch-action:manipulation;
+    position:relative;
+    background:
+      radial-gradient(ellipse at 12% 0%, rgba(200,175,235,.16), transparent 42%),
+      repeating-radial-gradient(circle at 8% 8%, rgba(235,220,255,.30) 0 1.4px, transparent 1.4px 54px),
+      repeating-radial-gradient(circle at 46% 26%, rgba(201,162,77,.14) 0 1.2px, transparent 1.2px 70px),
+      repeating-radial-gradient(circle at 70% 60%, rgba(235,220,255,.16) 0 1.1px, transparent 1.1px 64px),
+      linear-gradient(180deg, var(--dusk-deep) 0%, var(--dusk-mid) 10%, var(--dusk-warm) 28%, #251c46 52%, #1c1533 78%, #130d22 100%);
+  }
+  ::selection{background:var(--terracotta); color:#fff;}
+
+  /* ---------- SITE-WIDE FANTASY AMBIENCE (fixed backdrop layer) ---------- */
+  #fantasyBg{position:fixed; inset:0; z-index:-1; pointer-events:none; overflow:hidden;}
+  #fantasyBg .fb-moon{
+    position:absolute; top:18px; right:6%; width:54px; height:54px; border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #fff9e4, #f3dfa0 55%, #e0c377 80%);
+    box-shadow:0 0 32px 10px rgba(243,223,160,.35); opacity:.85;
+  }
+  #fantasyBg .fb-firefly{
+    position:absolute; width:6px; height:6px; border-radius:50%; background:#f6e6a1;
+    box-shadow:0 0 8px 3px rgba(246,230,161,.85); opacity:.7;
+    animation:fireflyDrift 9s ease-in-out infinite;
+  }
+  @keyframes fireflyDrift{
+    0%,100%{ transform:translate(0,0); opacity:.3; }
+    25%{ transform:translate(14px,-22px); opacity:.9; }
+    50%{ transform:translate(-10px,-8px); opacity:.5; }
+    75%{ transform:translate(8px,16px); opacity:.85; }
+  }
+  #fantasyBg .fb-vine{
+    position:absolute; top:0; bottom:0; width:34px; opacity:.35;
+    background-repeat:repeat-y; background-size:34px 220px;
+  }
+  #fantasyBg .fb-vine-left{ left:0;
+    background-image:radial-gradient(circle at 6px 20px, var(--sage) 0 5px, transparent 6px),
+                      radial-gradient(circle at 20px 90px, var(--sage-light) 0 4px, transparent 5px),
+                      radial-gradient(circle at 8px 160px, var(--sage) 0 4px, transparent 5px);
+  }
+  #fantasyBg .fb-vine-right{ right:0;
+    background-image:radial-gradient(circle at 28px 50px, var(--sage) 0 5px, transparent 6px),
+                      radial-gradient(circle at 14px 130px, var(--sage-light) 0 4px, transparent 5px),
+                      radial-gradient(circle at 26px 200px, var(--sage) 0 4px, transparent 5px);
+  }
+  #fantasyBg .fb-treeline{
+    position:absolute; left:0; right:0; bottom:0; height:46px; opacity:.28;
+    background:
+      radial-gradient(circle at 8% 100%, var(--sage-dark) 0 26px, transparent 27px),
+      radial-gradient(circle at 22% 100%, var(--sage-dark) 0 34px, transparent 35px),
+      radial-gradient(circle at 38% 100%, var(--sage-dark) 0 22px, transparent 23px),
+      radial-gradient(circle at 55% 100%, var(--sage-dark) 0 30px, transparent 31px),
+      radial-gradient(circle at 70% 100%, var(--sage-dark) 0 24px, transparent 25px),
+      radial-gradient(circle at 86% 100%, var(--sage-dark) 0 32px, transparent 33px),
+      radial-gradient(circle at 98% 100%, var(--sage-dark) 0 20px, transparent 21px);
+  }
+  #fantasyBg .fb-wisp{
+    position:absolute; width:16px; height:16px; border-radius:50%;
+    background:radial-gradient(circle at 40% 35%, rgba(255,255,255,.9), rgba(184,163,255,.35) 60%, transparent 75%);
+    opacity:.6; animation:wispFloat 12s ease-in-out infinite;
+  }
+  @keyframes wispFloat{
+    0%,100%{ transform:translateY(0) translateX(0); }
+    33%{ transform:translateY(-26px) translateX(10px); }
+    66%{ transform:translateY(-6px) translateX(-14px); }
+  }
+
+
+  /* ---------- TOOLBAR ---------- */
+  .toolbar{
+    position:sticky; top:0; z-index:30; display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+    padding:9px 16px; background:rgba(255,250,240,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line-soft);
+  }
+  .btn{
+    font-family:'Quicksand'; font-weight:700; font-size:.78rem; cursor:pointer; border-radius:20px; padding:8px 14px;
+    border:1.5px solid var(--line); background:var(--paper); color:var(--ink); white-space:nowrap;
+  }
+  .btn.primary{background:var(--terracotta); border-color:var(--terracotta); color:#fff;}
+  .btn.undo{background:var(--sage); border-color:var(--sage); color:#fff;}
+  .btn.undo:disabled{opacity:.42; cursor:not-allowed;}
+  input[type=file]{display:none;}
+
+  /* ---------- HERO / GARDEN SCENE ---------- */
+  .hero{
+    position:relative; overflow:hidden; padding:26px 16px 0;
+    background:linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bot) 78%, var(--paper) 100%);
+    border-bottom:3px solid var(--sage-light);
+  }
+  .sun-glow{
+    position:absolute; top:-90px; right:-50px; width:220px; height:220px; border-radius:50%;
+    background:radial-gradient(circle at 40% 40%, #fff3cf, #f6c977 70%); opacity:.75; filter:blur(2px);
+  }
+  .cloud{
+    position:absolute; opacity:.7;
+  }
+  .cloud .puff{position:absolute; background:#fff; border-radius:50%;}
+  @keyframes drift{ from{transform:translateX(0);} to{transform:translateX(30px);} }
+  .cloud1{top:18px; left:8%; width:70px; height:24px; animation:drift 14s ease-in-out infinite alternate;}
+  .cloud2{top:50px; right:18%; width:56px; height:20px; animation:drift 18s ease-in-out infinite alternate-reverse;}
+  .cloud1 .puff:nth-child(1){width:34px;height:34px; top:-14px; left:4px;}
+  .cloud1 .puff:nth-child(2){width:26px;height:26px; top:-9px; left:32px;}
+  .cloud2 .puff:nth-child(1){width:28px;height:28px; top:-11px; left:2px;}
+  .cloud2 .puff:nth-child(2){width:20px;height:20px; top:-7px; left:26px;}
+
+  .hero-inner{position:relative; z-index:2; text-align:center; max-width:640px; margin:0 auto;}
+  .eyebrow-script{font-family:'Caveat',cursive; font-size:1.6rem; color:var(--blush); display:inline-block; transform:rotate(-2deg); text-shadow:0 0 10px rgba(13,9,24,.6);}
+  h1.title{
+    font-family:'Cinzel Decorative',serif; font-weight:700; font-size:clamp(1.9rem,8vw,3rem); color:var(--mustard); margin:2px 0 12px;
+    letter-spacing:.01em;
+    text-shadow:0 0 22px var(--gold-glow), 0 0 46px var(--violet-glow), 2px 3px 0 rgba(13,9,24,.5);
+  }
+  .exam-dates{display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;}
+  .exam-date{
+    background:var(--paper); border:1.5px solid var(--sage); border-radius:20px; padding:6px 13px;
+    font-weight:700; font-size:.82rem; color:var(--sage-dark);
+  }
+  .exam-date .cd{font-weight:500; color:var(--ink-soft); font-size:.74rem;}
+
+  /* garden scene */
+  .garden{
+    position:relative; display:flex; align-items:flex-end; justify-content:center; gap:6px;
+    padding:6px 10px 0; min-height:190px;
+  }
+  .tree-wrap{position:relative; width:130px; height:170px; flex:none;}
+  .tree-wrap svg{width:100%; height:100%; overflow:visible;}
+  .tree-caption{
+    position:absolute; bottom:-2px; left:50%; transform:translateX(-50%); white-space:nowrap;
+    font-family:'Caveat'; font-size:1rem; color:var(--sage-light); font-weight:700; text-shadow:0 0 8px rgba(13,9,24,.7);
+  }
+  .cat-wrap{position:relative; width:140px; height:150px; flex:none; cursor:pointer;}
+  @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-4px);} }
+  .cat-svg{width:100%; height:100%; overflow:visible; animation:bob 3.2s ease-in-out infinite;}
+  .cat-svg.mood-sleep{animation:none;}
+  .cat-svg .lvl{transition:opacity .3s;}
+  .cat-svg .eyes-open, .cat-svg .mouth-default, .cat-svg .tail-rest{display:block;}
+  .cat-svg .eyes-closed, .cat-svg .eyes-sleep, .cat-svg .mouth-big, .cat-svg .tail-up, .cat-svg .sparkles, .cat-svg .zzz{display:none;}
+  .cat-svg.mood-sleep .eyes-open, .cat-svg.mood-sleep .mouth-default{display:none;}
+  .cat-svg.mood-sleep .eyes-sleep, .cat-svg.mood-sleep .zzz{display:block;}
+  .cat-svg.mood-happy .eyes-open, .cat-svg.mood-happy .tail-rest{display:none;}
+  .cat-svg.mood-happy .eyes-closed, .cat-svg.mood-happy .tail-up{display:block;}
+  .cat-svg.mood-cheer .eyes-open, .cat-svg.mood-cheer .mouth-default, .cat-svg.mood-cheer .tail-rest{display:none;}
+  .cat-svg.mood-cheer .eyes-closed, .cat-svg.mood-cheer .mouth-big, .cat-svg.mood-cheer .tail-up, .cat-svg.mood-cheer .sparkles{display:block;}
+  @keyframes tailsway{ 0%,100%{transform:rotate(0deg);} 50%{transform:rotate(-8deg);} }
+  .tail-rest, .tail-up{transform-origin:100px 108px; animation:tailsway 2.4s ease-in-out infinite;}
+  .cat-svg.mood-sleep .tail-rest{animation:none;}
+
+  .speech-bubble{
+    position:absolute; top:-6px; left:50%; transform:translateX(-38%); background:#fff; border:1.5px solid var(--ink-soft);
+    border-radius:16px; padding:7px 11px; font-family:'Caveat'; font-size:1.05rem; color:var(--ink);
+    max-width:180px; text-align:center; line-height:1.15; box-shadow:1px 2px 0 rgba(0,0,0,.06);
+  }
+  .speech-bubble::after{
+    content:""; position:absolute; bottom:-8px; left:38%; width:0; height:0;
+    border-left:7px solid transparent; border-right:7px solid transparent; border-top:8px solid #fff;
+  }
+  .stat-strip{display:flex; justify-content:center; gap:14px; flex-wrap:wrap; padding:10px 10px 18px; font-size:.82rem; color:var(--ink-soft); font-weight:600;}
+  .stat-chip{background:var(--paper); border:1px solid var(--line-soft); border-radius:16px; padding:5px 12px;}
+
+  main{max-width:820px; margin:0 auto; padding:0 16px;}
+
+  /* ---------- SECTION BANNER ---------- */
+  .section-banner{position:relative; text-align:center; padding:38px 10px 22px;}
+  .section-banner h2{
+    font-family:'Cinzel',serif; font-weight:600; font-size:clamp(1.5rem,6vw,2.1rem); color:var(--mustard); margin:0;
+    letter-spacing:.03em; text-shadow:0 0 16px var(--gold-glow);
+  }
+  .section-banner .chapter-num{
+    display:block; font-family:'Cinzel Decorative',serif; font-size:.72rem; letter-spacing:.32em; text-transform:uppercase;
+    color:var(--sage-light); opacity:.9; margin-bottom:6px;
+  }
+  .section-banner .sub{font-family:'Caveat'; font-size:1.15rem; color:var(--sage-light); text-shadow:0 0 8px rgba(13,9,24,.5);}
+  .section-banner .sub.fantasy-label{font-family:'MedievalSharp','Caveat',cursive; font-size:1.05rem; letter-spacing:.02em;}
+  .section-banner .leaf{font-size:1.3rem;}
+  .section-banner::after{
+    content:"✦"; display:block; margin:10px auto 0; width:fit-content; color:var(--mustard); opacity:.6;
+    font-size:.8rem; letter-spacing:.4em;
+  }
+
+  /* ---------- CARD BASE ---------- */
+  .card{
+    background:var(--paper); border:2px solid var(--sage-light); border-radius:22px;
+    padding:16px 16px 18px; margin-bottom:18px; position:relative;
+    box-shadow:0 3px 0 rgba(74,55,40,0.06);
+  }
+  .card.tilt-a{transform:rotate(-0.35deg);}
+  .card.tilt-b{transform:rotate(0.3deg);}
+  .card .washi{
+    position:absolute; top:-9px; left:22px; width:56px; height:18px; background:var(--terracotta); opacity:.9;
+    transform:rotate(-4deg); border-radius:3px; box-shadow:0 2px 3px rgba(0,0,0,.15);
+  }
+  .card h3{
+    font-family:'Cormorant Garamond',serif; font-weight:700; font-style:italic; font-size:1.35rem; color:var(--sage-dark); margin:4px 0 12px;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .tiny-btn{
+    background:#fff; border:1.5px dashed var(--terracotta); color:var(--terracotta-dark); font-family:'Quicksand'; font-weight:700;
+    font-size:.72rem; border-radius:12px; padding:5px 10px; cursor:pointer; white-space:nowrap;
+  }
+  .tiny-btn:active{background:var(--terracotta); color:#fff;}
+
+  /* ---------- PRIORITY TABLES ---------- */
+  .prio-table{width:100%; border-collapse:collapse; font-size:.85rem;}
+  .prio-table th{
+    text-align:left; font-weight:700; color:var(--sage-dark); font-size:.68rem; text-transform:uppercase;
+    letter-spacing:.05em; padding:6px 6px; border-bottom:2px solid var(--sage-light);
+  }
+  .prio-table td{padding:8px 6px; border-bottom:1px dashed var(--line-soft); vertical-align:top;}
+  .prio-table td[contenteditable]{outline:none; cursor:text;}
+  .prio-table td[contenteditable]:focus{background:var(--sage-light); border-radius:6px;}
+  .pyq-cell{width:64px; white-space:nowrap;}
+  .prio-cell{width:100px;}
+  .prio-badge{
+    display:inline-block; padding:3px 10px; border-radius:20px; font-size:.72rem; font-weight:700; outline:none;
+    background:rgba(217,164,65,.22); color:var(--mustard); min-width:60px; text-align:center;
+  }
+  .prio-badge.extreme{background:rgba(168,53,92,.22); color:var(--terracotta-dark);}
+  .prio-badge.veryhigh{background:rgba(122,31,63,.18); color:var(--terracotta-dark);}
+  .prio-badge.high{background:rgba(201,162,77,.24); color:#8a6a1f;}
+  .prio-badge.moderate{background:rgba(124,91,176,.20); color:var(--sage-dark);}
+  .prio-badge.once{background:rgba(47,33,64,.12); color:var(--ink-soft);}
+  .row-del-x{background:none;border:none;color:var(--ink-soft);cursor:pointer;font-size:.85rem;opacity:.55;
+    padding:7px 5px;min-width:28px;min-height:28px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+  .row-del-x:active{opacity:1;color:var(--terracotta-dark);}
+
+  /* ---------- PAW CHECKLIST ---------- */
+  .task-row{display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px dashed var(--line-soft);}
+  .task-row:last-of-type{border-bottom:none;}
+  .pencil-box{width:34px; height:34px; flex:none; touch-action:none; cursor:pointer;}
+  .pencil-box svg{width:100%; height:100%; overflow:visible;}
+  .box-outline{fill:#fff; stroke:var(--sage); stroke-width:2.2;}
+  .tick-path{fill:none; stroke:var(--sage); stroke-width:3.2; stroke-linecap:round; stroke-linejoin:round; opacity:0;}
+  .task-text{flex:1; font-size:.92rem; outline:none; min-width:0; word-break:break-word; line-height:1.35; font-weight:500;}
+  .task-row.done .task-text{opacity:.5; text-decoration:line-through; text-decoration-color:var(--sage);}
+  .task-row.done .task-text::after{content:" 🐾"; text-decoration:none;}
+  .add-row{display:flex; gap:8px; margin-top:10px;}
+  .add-row input{
+    flex:1; background:#fff; border:1.5px solid var(--line-soft); border-radius:14px; color:var(--ink);
+    padding:8px 12px; font-family:'Quicksand'; font-size:.88rem;
+  }
+  .add-row input:focus{outline:none; border-color:var(--sage);}
+  .add-row button{
+    background:var(--sage); border:none; color:#fff; font-weight:700; border-radius:14px;
+    padding:0 16px; cursor:pointer; font-family:'Quicksand'; font-size:.85rem;
+  }
+
+  /* ---------- SCORE TABLES ---------- */
+  .score-grid{width:100%; border-collapse:collapse; font-size:.85rem;}
+  .score-grid th{
+    text-align:left; color:var(--sage-dark); font-weight:700; font-size:.68rem; text-transform:uppercase;
+    letter-spacing:.05em; border-bottom:2px solid var(--sage-light); padding:6px 4px;
+  }
+  .score-grid td{border-bottom:1px solid var(--line-soft); padding:2px;}
+  .score-grid td input{
+    width:100%; background:transparent; border:none; color:var(--ink); font-family:'Quicksand'; font-size:.85rem;
+    padding:7px 5px; outline:none;
+  }
+  .score-grid td input:focus{background:var(--sage-light); border-radius:6px;}
+  .sno-col{width:30px; color:var(--ink-soft); text-align:center; font-size:.8rem;}
+  .score-col{width:76px;}
+  .score-tabs{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px;}
+  .score-tab{
+    background:#fff; border:1.5px solid var(--line-soft); color:var(--ink-soft); font-family:'Quicksand';
+    font-weight:700; font-size:.76rem; padding:7px 13px; border-radius:14px; cursor:pointer;
+  }
+  .score-tab.active{background:var(--sage); color:#fff; border-color:var(--sage);}
+  .score-panel{display:none;}
+  .score-panel.active{display:block;}
+
+  /* ---------- DAILY TRACKING ---------- */
+  .month-block details{margin-bottom:6px;}
+  .month-summary{
+    font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.3rem; cursor:pointer; list-style:none;
+    padding:12px 6px; color:var(--mustard); text-shadow:0 0 8px rgba(13,9,24,.5); border-bottom:2px solid var(--sage-light);
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .month-summary::-webkit-details-marker{display:none;}
+  .month-summary .chev{transition:transform .2s; font-family:'Quicksand';}
+  details[open] > .month-summary .chev{transform:rotate(90deg);}
+
+  .day-card{background:var(--paper); border:2px solid var(--line-soft); border-radius:18px; margin:10px 0; overflow:hidden;}
+  .day-card.today{border-color:var(--terracotta);}
+  .day-card.exam{border-color:var(--terracotta-dark);}
+  .day-head{display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer;}
+  .day-date{font-family:'Cinzel',serif; font-weight:600; font-size:1.3rem; color:var(--ink); min-width:52px; text-align:center;}
+  .day-date .wk{display:block; font-family:'Quicksand'; font-size:.6rem; letter-spacing:.08em; color:var(--sage-dark); font-weight:700;}
+  .day-meta{flex:1; min-width:0;}
+  .day-meta .exam-line{font-size:.82rem; color:var(--terracotta-dark); font-weight:700;}
+  .day-meta .default-line{font-family:'MedievalSharp','Caveat',cursive; font-size:1rem; color:var(--ink-soft); letter-spacing:.01em;}
+
+  /* ---------- fantasy journal font for what's typed in Daily Tracking ---------- */
+  #months .task-text, #months .add-row input, #months textarea.notes-input, #months .reps-row input{
+    font-family:'IM Fell English', 'Caveat', serif; font-size:1rem; letter-spacing:.01em;
+  }
+  #months .exam-line{font-family:'MedievalSharp','Fredoka',cursive;}
+  .day-progress-num{font-size:.72rem; color:var(--sage-dark); font-weight:700;}
+  .day-chev{color:var(--ink-soft); transition:transform .2s;}
+  .day-card.open .day-chev{transform:rotate(90deg);}
+  .day-body{display:none; padding:2px 14px 16px;}
+  .day-card.open .day-body{display:block;}
+
+  .field-label{font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; color:var(--sage-dark); font-weight:700; margin:14px 0 6px;}
+  .reps-row input[type=number]{
+    width:90px; background:#fff; border:1.5px solid var(--line-soft); border-radius:14px; color:var(--ink);
+    padding:8px 12px; font-family:'Quicksand'; font-size:.9rem;
+  }
+  textarea.notes-input{
+    width:100%; min-height:60px; resize:vertical; background:#fff; color:var(--ink);
+    border:1.5px solid var(--line-soft); border-radius:14px; padding:9px 12px; font-family:'Quicksand'; font-size:.87rem;
+  }
+
+  footer{max-width:820px; margin:20px auto 0; padding:14px 20px 30px; font-size:.75rem; color:#a495c0; text-align:center;}
+
+  @media (max-width:480px){
+    .exam-dates{gap:8px;}
+    .score-tab{padding:6px 10px; font-size:.72rem;}
+    .garden{gap:0;}
+  }
+
+  /* ---------- WHIMSY: STARS / NIGHT CORNER ---------- */
+  .stars-corner{position:absolute; top:2px; left:0; width:130px; height:70px; z-index:1; pointer-events:none;}
+  .stars-corner .star{position:absolute; color:#e8d9a8; opacity:.85; text-shadow:0 0 6px rgba(201,162,77,.7); animation:twinkle 2.6s ease-in-out infinite;}
+  @keyframes twinkle{ 0%,100%{opacity:.2; transform:scale(.8);} 50%{opacity:.95; transform:scale(1.15);} }
+
+  /* ---------- WHIMSY: CASTLE ---------- */
+  .castle-wrap{position:absolute; top:12px; left:5%; width:88px; z-index:1; cursor:pointer;}
+  .castle-svg{width:100%; height:auto; overflow:visible; filter:drop-shadow(0 2px 2px rgba(0,0,0,.08));}
+  .castle-bubble{position:absolute; top:100%; left:0; margin-top:4px; z-index:6; opacity:0; transition:opacity .2s; width:max-content; max-width:170px;}
+
+  /* ---------- WHIMSY: SLEEPY DRAGON ---------- */
+  .dragon-wrap{position:absolute; right:1%; bottom:0; width:62px; z-index:2; cursor:pointer;}
+  .dragon-svg{width:100%; height:auto; overflow:visible; animation:bob 3.6s ease-in-out infinite;}
+  .dragon-svg .dragon-eyes-open, .dragon-svg .dragon-fire{display:none;}
+  .dragon-svg.awake .dragon-eyes-closed, .dragon-svg.awake .dragon-zzz{display:none;}
+  .dragon-svg.awake .dragon-eyes-open, .dragon-svg.awake .dragon-fire{display:block;}
+  .dragon-svg.puff{animation:dragonPuff .4s ease;}
+  @keyframes dragonPuff{ 0%,100%{transform:scale(1) rotate(0);} 50%{transform:scale(1.1) rotate(-4deg);} }
+  .dragon-bubble{position:absolute; bottom:100%; right:0; margin-bottom:4px; z-index:6; opacity:0; transition:opacity .2s; width:max-content; max-width:160px;}
+
+  /* ---------- WHIMSY: PEEKING CAT ---------- */
+  .peek-cat{
+    position:absolute; left:-8px; bottom:4px; font-size:1.35rem; transform:rotate(-8deg); cursor:pointer;
+    filter:drop-shadow(0 1px 1px rgba(0,0,0,.15)); animation:peekWiggle 2.8s ease-in-out infinite;
+  }
+  @keyframes peekWiggle{ 0%,100%{transform:rotate(-8deg) translateY(0);} 50%{transform:rotate(-2deg) translateY(-3px);} }
+  .peek-bubble{position:absolute; bottom:100%; left:-6px; margin-bottom:4px; z-index:6; opacity:0; transition:opacity .2s; width:max-content; max-width:150px;}
+
+  /* generic small speech bubble used by castle/dragon/peek-cat/shelf */
+  .mini-bubble{
+    display:none; background:#fff; border:1.5px solid var(--ink-soft); border-radius:14px; padding:6px 10px;
+    font-family:'Caveat'; font-size:.95rem; color:var(--ink); text-align:center; line-height:1.15;
+    box-shadow:1px 2px 0 rgba(0,0,0,.06);
+  }
+
+  /* ---------- WHIMSY: LIBRARY SHELF ---------- */
+  .shelf-row{
+    position:relative; display:flex; align-items:flex-end; justify-content:center; gap:4px;
+    margin:-4px auto 16px; cursor:pointer; width:max-content;
+  }
+  .shelf-row .book{width:13px; height:36px; border-radius:3px 3px 1px 1px; box-shadow:inset -2px 0 0 rgba(0,0,0,.08);}
+  .shelf-row .book.tall{height:46px;}
+  .shelf-row .lib-cat{font-size:1.05rem; margin-left:6px; transform:translateY(-2px);}
+  .shelf-bubble{position:absolute; bottom:100%; left:50%; transform:translateX(-50%); margin-bottom:6px; z-index:6;}
+
+  /* ---------- WHIMSY: SECTION CORNER DOODLES ---------- */
+  .corner-deco{
+    position:absolute; top:4px; font-size:1.25rem; opacity:.5; pointer-events:none;
+    animation:cornerFloat 3.6s ease-in-out infinite;
+  }
+  .corner-deco.corner-castle{left:10%;}
+  .corner-deco.corner-library{right:10%;}
+  .corner-deco.corner-dragon{left:10%;}
+  .corner-deco.corner-cat{right:10%;}
+  .corner-deco.corner-lantern{right:22%; animation-delay:.4s;}
+  .corner-deco.corner-mushroom{left:22%; animation-delay:.8s;}
+  .corner-deco.corner-feather{right:22%; animation-delay:1.1s;}
+  .corner-deco.corner-scroll{left:22%; animation-delay:.6s;}
+  @keyframes cornerFloat{ 0%,100%{transform:translateY(0) rotate(-4deg);} 50%{transform:translateY(-5px) rotate(4deg);} }
+
+  /* ---------- WHIMSY: TASK-COMPLETE CELEBRATION ---------- */
+  #celebrationLayer{position:fixed; inset:0; pointer-events:none; z-index:9997; overflow:hidden;}
+  .celeb-dim{
+    position:fixed; inset:0; background:rgba(47,38,80,0.28); opacity:0;
+    animation:celebDimIn .3s ease forwards;
+  }
+  .celeb-dim.celeb-out{animation:celebDimOut .5s ease forwards;}
+  @keyframes celebDimIn{ to{opacity:1;} }
+  @keyframes celebDimOut{ to{opacity:0;} }
+  .celeb-toast{
+    position:fixed; left:50%; top:50%; transform:translate(-50%,-50%) scale(.7); opacity:0;
+    background:linear-gradient(180deg,#fffdf6,#fff3da);
+    border:4px solid var(--terracotta); border-radius:32px; padding:26px 34px;
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    box-shadow:0 0 0 6px rgba(255,255,255,.6), 0 18px 50px rgba(0,0,0,.32);
+    animation:celebIn .5s cubic-bezier(.34,1.56,.64,1) forwards;
+    font-family:'Quicksand'; font-weight:700; color:var(--ink); max-width:88vw; width:340px; text-align:center;
+  }
+  .celeb-toast.celeb-dragon{border-color:var(--mustard);}
+  .celeb-toast.celeb-cat{border-color:var(--sage);}
+  .celeb-emoji{font-size:4.2rem; line-height:1; animation:celebBounce .6s ease-in-out infinite alternate;
+    filter:drop-shadow(0 6px 10px rgba(0,0,0,.18));}
+  .celeb-msg{font-family:'Cinzel Decorative','Fredoka',cursive; font-weight:700; font-size:1.15rem; line-height:1.4; color:var(--terracotta-dark);}
+  .celeb-toast.celeb-out{animation:celebOut .5s ease forwards;}
+  @keyframes celebIn{ to{ transform:translate(-50%,-50%) scale(1); opacity:1; } }
+  @keyframes celebOut{ to{ transform:translate(-50%,-50%) scale(.8); opacity:0; } }
+  @keyframes celebBounce{ from{transform:translateY(0) rotate(-4deg);} to{transform:translateY(-10px) rotate(4deg);} }
+  .confetti-piece{position:fixed; top:-24px; pointer-events:none; animation:confettiFall 2.1s ease-in forwards;}
+  @keyframes confettiFall{
+    0%{ transform:translateY(0) rotate(0deg); opacity:1; }
+    100%{ transform:translateY(85vh) rotate(260deg); opacity:0; }
+  }
+
+  @media (max-width:480px){
+    .celeb-toast{width:82vw; padding:22px 20px;}
+    .celeb-emoji{font-size:3.4rem;}
+    .celeb-msg{font-size:1rem;}
+    .castle-wrap{width:70px;}
+    .dragon-wrap{width:50px;}
+    .stars-corner{width:90px;}
+  }
+
+  /* ---------- EXTRA NIGHT COURT STUDY REALM ---------- */
+  .nc-banner{position:relative;z-index:4;max-width:820px;margin:14px auto 0;padding:0 16px}
+  .nc-banner-inner{border:1.5px solid rgba(201,162,77,.4);border-radius:20px;background:linear-gradient(135deg,rgba(36,26,60,.92),rgba(24,17,42,.92));box-shadow:0 5px 22px rgba(13,9,24,.4), inset 0 0 30px rgba(124,91,176,.12);padding:13px 14px;text-align:center;font-family:'Caveat';color:#e8def0;font-size:1.16rem}
+  .nc-banner-inner b{font-family:'Cinzel Decorative';font-size:.92rem;color:var(--mustard);letter-spacing:.03em}
+  .chapter-v-label{display:block;font-family:'Cinzel Decorative',serif;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--blush);opacity:.9;margin-bottom:6px}
+  .nc-chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:8px auto 0}
+  .nc-chip{border:1px solid rgba(201,162,77,.35);background:rgba(255,255,255,.06);border-radius:999px;padding:5px 10px;font:700 .7rem 'Quicksand';color:#ded0f2}
+  .nc-progress{position:relative;z-index:4;max-width:820px;margin:10px auto;padding:0 16px}
+  .nc-progress-inner{border:1.5px solid rgba(201,162,77,.28);border-radius:18px;padding:10px 12px;background:rgba(244,231,201,.14)}
+  .nc-progress-title{font:700 .72rem 'Quicksand';letter-spacing:.06em;text-transform:uppercase;color:#ded0f2}
+  .nc-track{height:10px;border-radius:99px;background:rgba(13,9,24,.4);overflow:hidden;margin-top:7px}
+  .nc-fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#8069ae,#d9b56d);transition:width .7s ease;box-shadow:0 0 10px rgba(201,162,77,.6)}
+  .nc-caption{font:600 .76rem 'Quicksand';color:#c9bcdb;margin-top:5px}
+  .nc-dragon-float{position:fixed;right:18px;top:88px;z-index:25;cursor:pointer;font-size:2rem;animation:ncfloat 4s ease-in-out infinite;filter:drop-shadow(0 4px 7px rgba(13,9,24,.5))}
+  .nc-tip{position:absolute;right:0;top:38px;width:190px;padding:8px 10px;border-radius:14px;background:#241a3c;border:1px solid rgba(201,162,77,.4);font:600 .74rem 'Quicksand';color:#ded0f2;display:none;text-align:center;box-shadow:0 6px 18px rgba(13,9,24,.4)}
+  @keyframes ncfloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-9px) rotate(4deg)}}
+  @media(max-width:600px){.nc-dragon-float{right:9px;top:82px;font-size:1.65rem}.nc-tip{width:165px}}
+
+  /* ---------- LEVEL / XP / ACHIEVEMENTS ---------- */
+  .level-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+  .level-badge{font-family:'Cinzel',serif;font-weight:700;font-size:.82rem;letter-spacing:.03em;color:#150f26;
+    background:linear-gradient(135deg,#e9d9a8,var(--mustard));padding:5px 14px;border-radius:999px;
+    box-shadow:0 2px 10px rgba(201,162,77,.5);}
+  .xp-badge{font:700 .74rem 'Quicksand';color:#ded0f2;border:1px solid rgba(201,162,77,.35);border-radius:999px;padding:5px 12px;background:rgba(255,255,255,.05)}
+  .achv-row{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-top:11px}
+  .achv-badge{font-size:1.28rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:50%;
+    background:rgba(255,255,255,.05);border:1px solid rgba(201,162,77,.22);opacity:.28;filter:grayscale(1);transition:all .25s;cursor:default;}
+  .achv-badge.unlocked{opacity:1;filter:none;background:radial-gradient(circle,rgba(201,162,77,.35),transparent 70%);
+    border-color:rgba(201,162,77,.55);box-shadow:0 0 12px rgba(201,162,77,.4);}
+
+  /* ---------- QUOTE OF THE REALM ---------- */
+  .quote-wrap{position:relative;z-index:4;max-width:640px;margin:16px auto 0;padding:0 16px;text-align:center}
+  .quote-card{position:relative;border:1.5px solid rgba(201,162,77,.35);border-radius:20px;padding:20px 22px 16px;
+    background:linear-gradient(160deg,rgba(36,26,60,.85),rgba(20,14,36,.9));box-shadow:0 8px 26px rgba(13,9,24,.4);}
+  .quote-card::before{content:"❝";position:absolute;top:-2px;left:16px;font-family:'Cinzel Decorative';font-size:2rem;color:var(--mustard);opacity:.6;}
+  .quote-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;line-height:1.5;color:#f0e9f5;
+    min-height:2.6em;display:flex;align-items:center;justify-content:center;transition:opacity .25s;}
+  .quote-attrib{font:600 .72rem 'Quicksand';letter-spacing:.04em;color:var(--blush);margin-top:6px;opacity:.85;}
+  .quote-btn{margin-top:12px;font-family:'Quicksand';font-weight:700;font-size:.76rem;cursor:pointer;border-radius:20px;
+    padding:7px 16px;border:1.5px solid var(--mustard);background:transparent;color:var(--mustard);}
+  .quote-btn:active{background:var(--mustard);color:#150f26;}
+
+  /* ---------- SHOOTING STAR ---------- */
+  .fb-shooting{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;opacity:0;
+    box-shadow:0 0 6px 2px rgba(255,255,255,.8);animation:shootStar 7s linear infinite;}
+  .fb-shooting::before{content:"";position:absolute;top:50%;right:0;width:64px;height:1px;
+    background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.85));transform:translateY(-50%);}
+  @keyframes shootStar{
+    0%{ transform:translate(0,0); opacity:0; }
+    2%{ opacity:1; }
+    14%{ transform:translate(-260px,160px); opacity:0; }
+    100%{ transform:translate(-260px,160px); opacity:0; }
+  }
+
+  /* ---------- THE FOCUS RITUAL (candlelit study timer) ---------- */
+  .ritual-card{
+    background:linear-gradient(160deg, var(--paper), #ecdcb0);
+    border:2px solid var(--mustard); border-radius:26px; padding:22px 18px 20px; margin:0 0 18px;
+    position:relative; box-shadow:0 8px 30px rgba(13,9,24,.35), inset 0 0 0 1px rgba(255,255,255,.35);
+    text-align:center; overflow:hidden;
+  }
+  .ritual-card::before{
+    content:""; position:absolute; inset:6px; border:1px solid rgba(122,31,63,.25); border-radius:20px; pointer-events:none;
+  }
+  .ritual-title{font-family:'Cinzel Decorative',serif; font-size:1.2rem; color:var(--terracotta-dark); letter-spacing:.03em; margin-bottom:2px;}
+  .ritual-sub{font-family:'Caveat'; font-size:1.05rem; color:var(--sage-dark); margin-bottom:14px;}
+  .ritual-stage{display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap;}
+  .ritual-ring-wrap{position:relative; width:172px; height:172px; flex:none;}
+  .ritual-ring-wrap svg{width:100%; height:100%; transform:rotate(-90deg);}
+  .ritual-ring-bg{fill:none; stroke:rgba(122,31,63,.15); stroke-width:8;}
+  .ritual-ring-fill{fill:none; stroke:url(#ritualGradient); stroke-width:8; stroke-linecap:round;
+    transition:stroke-dashoffset 1s linear; filter:drop-shadow(0 0 6px rgba(201,162,77,.7));}
+  .ritual-time{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-family:'Cinzel',serif; font-weight:700; font-size:1.7rem; color:var(--ink);}
+  .ritual-candle{position:absolute; bottom:6px; left:50%; transform:translateX(-50%); width:26px; height:40px; pointer-events:none;}
+  .ritual-candle .flame{
+    position:absolute; top:-16px; left:50%; transform:translateX(-50%); width:10px; height:16px; border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+    background:radial-gradient(circle at 50% 30%, #fff6d0, #f6c94d 55%, #b8547a 90%);
+    filter:blur(.2px); animation:flameFlicker 1.8s ease-in-out infinite; transform-origin:bottom center;
+  }
+  .ritual-candle .wax{position:absolute; bottom:0; left:0; width:100%; height:26px; background:linear-gradient(180deg,#fdf6e3,#e9d9a8); border-radius:3px 3px 5px 5px; box-shadow:inset 0 -3px 4px rgba(122,31,63,.15);}
+  @keyframes flameFlicker{
+    0%,100%{ transform:translateX(-50%) scaleY(1) rotate(0deg); }
+    25%{ transform:translateX(-50%) scaleY(1.08) rotate(-3deg); }
+    50%{ transform:translateX(-50%) scaleY(.94) rotate(2deg); }
+    75%{ transform:translateX(-50%) scaleY(1.05) rotate(-1deg); }
+  }
+  .ritual-side{display:flex; flex-direction:column; gap:10px; align-items:center; min-width:150px;}
+  .ritual-options{display:flex; gap:6px; flex-wrap:wrap; justify-content:center;}
+  .ritual-opt{
+    font-family:'Quicksand'; font-weight:700; font-size:.68rem; border-radius:14px; padding:6px 10px; cursor:pointer;
+    border:1.5px solid var(--sage); background:#fff; color:var(--sage-dark); white-space:nowrap;
+  }
+  .ritual-opt.active{background:var(--sage); color:#fff;}
+  .ritual-controls{display:flex; gap:8px;}
+  .ritual-btn{
+    font-family:'Quicksand'; font-weight:700; font-size:.8rem; border-radius:16px; padding:8px 16px; cursor:pointer;
+    border:none; background:var(--terracotta); color:#fff;
+  }
+  .ritual-btn.secondary{background:#fff; color:var(--terracotta-dark); border:1.5px solid var(--terracotta);}
+  .ritual-count{font:600 .72rem 'Quicksand'; color:var(--ink-soft);}
+  .ritual-cat{position:absolute; bottom:-2px; right:8px; font-size:1.6rem; animation:bob 3.4s ease-in-out infinite;}
+
+  /* ---------- MAP OF THE REALM ---------- */
+  .map-frame{
+    position:relative; width:100%; aspect-ratio:4/3; max-width:640px; margin:0 auto; border-radius:22px;
+    background:
+      radial-gradient(circle at 50% 88%, rgba(143,159,212,.35), transparent 45%),
+      radial-gradient(circle at 25% 78%, rgba(124,91,176,.28), transparent 40%),
+      radial-gradient(circle at 75% 78%, rgba(209,155,196,.3), transparent 40%),
+      radial-gradient(circle at 18% 30%, rgba(201,162,77,.22), transparent 42%),
+      radial-gradient(circle at 82% 30%, rgba(124,91,176,.3), transparent 42%),
+      linear-gradient(160deg, var(--paper), #e8d6a8);
+    border:3px double var(--mustard); box-shadow:0 10px 34px rgba(13,9,24,.4), inset 0 0 40px rgba(122,31,63,.08);
+    overflow:hidden;
+  }
+  .map-frame::before{
+    content:"✦"; position:absolute; top:8px; left:50%; transform:translateX(-50%); color:var(--terracotta-dark); opacity:.5; font-size:.8rem; letter-spacing:.5em;
+  }
+  .map-compass{position:absolute; top:12px; right:14px; font-size:1.3rem; opacity:.55; filter:grayscale(.2);}
+  .map-pin{
+    position:absolute; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:2px;
+    cursor:pointer; text-align:center; width:64px; background:none; border:none; padding:0;
+  }
+  .map-pin .pin-icon{
+    font-size:1.5rem; width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(circle, rgba(255,255,255,.65), rgba(255,255,255,.15)); border:1.5px solid var(--mustard);
+    box-shadow:0 0 10px rgba(201,162,77,.5); transition:transform .2s;
+  }
+  .map-pin:hover .pin-icon{transform:scale(1.1);}
+  .map-pin.locked .pin-icon{background:rgba(47,33,64,.35); border-color:rgba(47,33,64,.4); box-shadow:none; filter:grayscale(1);}
+  .map-pin .pin-label{font:700 .58rem 'Quicksand'; color:var(--ink); text-shadow:0 0 4px rgba(255,255,255,.7); line-height:1.1;}
+  .map-pin.locked .pin-label{color:var(--ink-soft);}
+  .map-pin-tip{
+    position:absolute; bottom:100%; left:50%; transform:translateX(-50%); margin-bottom:4px; width:max-content; max-width:150px;
+    background:#241a3c; color:#ded0f2; font:600 .68rem 'Quicksand'; padding:6px 9px; border-radius:10px; display:none;
+    box-shadow:0 4px 14px rgba(13,9,24,.4); z-index:5;
+  }
+
+  /* ---------- GENERIC FANTASY MODAL ---------- */
+  .fantasy-modal-layer{position:fixed; inset:0; z-index:9998; display:none; align-items:center; justify-content:center; padding:20px;}
+  .fantasy-modal-layer.open{display:flex;}
+  .fantasy-modal-dim{position:absolute; inset:0; background:rgba(10,7,20,.62); animation:celebDimIn .25s ease forwards;}
+  .fantasy-modal{
+    position:relative; max-width:380px; width:100%; background:linear-gradient(160deg,#2a1f47,#171029);
+    border:1.5px solid var(--mustard); border-radius:24px; padding:24px 22px 20px; text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,.5); color:#f0e9f5; animation:celebIn .35s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  .fantasy-modal h4{font-family:'Cinzel Decorative',serif; color:var(--mustard); font-size:1.15rem; margin:2px 0 4px; letter-spacing:.02em;}
+  .fantasy-modal .fm-flavor{font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.05rem; color:#ded0f2; margin:8px 0;}
+  .fantasy-modal .fm-stat{font:700 .8rem 'Quicksand'; color:var(--sage-light); background:rgba(255,255,255,.06); border-radius:12px; padding:8px 10px; margin:10px 0;}
+  .fantasy-modal .fm-quote{font-family:'Cormorant Garamond',serif; font-size:.92rem; color:var(--blush); opacity:.9; margin-top:6px;}
+  .fantasy-modal .fm-close{margin-top:14px; font-family:'Quicksand'; font-weight:700; font-size:.76rem; border-radius:16px;
+    padding:7px 18px; border:1.5px solid var(--mustard); background:transparent; color:var(--mustard); cursor:pointer;}
+
+</style>
+</head>
+<body>\n<div class="nc-dragon-float" id="ncDragon" title="tap your tiny dragon">🐉<div class="nc-tip">A tiny Night Court dragon is watching your study realm. Tap me. ✨</div></div>
+<div class="nc-banner"><div class="nc-banner-inner"><span class="chapter-v-label">✦ Chapter VI ✦ The Night Court</span><b>🌙 Night Court Study Realm</b><br>Feyre &amp; Rhysand are keeping watch while you build your moonlit library of knowledge.<div class="nc-chips"><span class="nc-chip">📚 Moonlit Library</span><span class="nc-chip">🐈‍⬛ Library Cats</span><span class="nc-chip">🐉 Tiny Dragons</span><span class="nc-chip">✨ Night Court</span></div></div></div>
+<div class="nc-progress"><div class="nc-progress-inner"><div class="nc-progress-title">🌌 Your little realm is growing</div><div class="nc-track"><div class="nc-fill" id="ncFill"></div></div><div class="nc-caption" id="ncCaption">Every tick adds a little more magic.</div>
+  <div class="level-row"><span class="level-badge" id="levelBadge">Apprentice</span><span class="xp-badge" id="xpBadge">0 XP</span></div>
+  <div class="achv-row" id="achvRow"></div>
+</div></div>
+<div class="quote-wrap">
+  <div class="quote-card">
+    <div class="quote-text" id="quoteText">The stars are waiting. So is your next chapter.</div>
+    <div class="quote-attrib" id="quoteAttrib">— the realm</div>
+    <button class="quote-btn" id="randomQuoteBtn" type="button">✨ Another Line from the Realm</button>
+  </div>
+</div>
+
+<div id="fantasyBg" aria-hidden="true">
+  <div class="fb-moon"></div>
+  <div class="fb-vine fb-vine-left"></div>
+  <div class="fb-vine fb-vine-right"></div>
+  <div class="fb-treeline"></div>
+  <span class="fb-firefly" style="top:12%; left:6%; animation-delay:0s;"></span>
+  <span class="fb-firefly" style="top:30%; left:92%; animation-delay:2s;"></span>
+  <span class="fb-firefly" style="top:55%; left:3%; animation-delay:4s;"></span>
+  <span class="fb-firefly" style="top:70%; left:88%; animation-delay:1s;"></span>
+  <span class="fb-firefly" style="top:85%; left:10%; animation-delay:3.5s;"></span>
+  <span class="fb-firefly" style="top:45%; left:50%; animation-delay:5s;"></span>
+  <span class="fb-wisp" style="top:22%; left:16%; animation-delay:0s;"></span>
+  <span class="fb-wisp" style="top:62%; left:80%; animation-delay:3s;"></span>
+  <span class="fb-wisp" style="top:38%; left:94%; animation-delay:6s;"></span>
+  <span class="fb-firefly" style="top:5%; left:40%; animation-delay:1.5s; background:#e8d9a8; box-shadow:0 0 8px 3px rgba(232,217,168,.85);"></span>
+  <span class="fb-firefly" style="top:18%; left:70%; animation-delay:2.5s; background:#e8d9a8; box-shadow:0 0 8px 3px rgba(232,217,168,.85);"></span>
+  <span class="fb-firefly" style="top:60%; left:22%; animation-delay:4.5s; background:#e8d9a8; box-shadow:0 0 8px 3px rgba(232,217,168,.85);"></span>
+  <span class="fb-firefly" style="top:92%; left:60%; animation-delay:6.5s; background:#e8d9a8; box-shadow:0 0 8px 3px rgba(232,217,168,.85);"></span>
+  <div class="fb-shooting" style="top:8%; left:88%; animation-delay:1s;"></div>
+  <div class="fb-shooting" style="top:22%; left:70%; animation-delay:9s;"></div>
+</div>
+<div id="celebrationLayer"></div>
+<div id="syncPanel" style="position:fixed;right:14px;bottom:14px;z-index:9999;
+  display:flex;align-items:center;gap:7px;padding:8px 10px;border-radius:14px;
+  background:rgba(255,255,255,.95);box-shadow:0 6px 24px rgba(0,0,0,.12);
+  border:1px solid rgba(0,0,0,.08);font:600 12px/1.2 system-ui,sans-serif;flex-wrap:wrap;max-width:310px;">
+  <span id="syncStatus" data-kind="local">💾 Local only</span>
+  <button id="syncNowBtn" type="button"
+    style="border:0;border-radius:10px;padding:7px 9px;cursor:pointer;
+    background:#f3f0ff;font:600 12px system-ui,sans-serif;">☁️ Sync now</button>
+  <button id="syncCodeBtn" type="button" title="Show your device sync code"
+    style="border:0;border-radius:10px;padding:7px 9px;cursor:pointer;
+    background:#efe8ff;font:600 12px system-ui,sans-serif;">📱 Devices</button>
+  <div id="syncCodeBox" style="display:none;width:100%;padding:7px 8px;background:#faf8ff;border-radius:10px;font-size:11px;line-height:1.4;">
+    <b>Device sync code:</b> <span id="syncCodeValue"></span><br>
+    Open this tracker on your iPad/phone/laptop and use the <b>same code</b>.
+    <button id="changeSyncCodeBtn" type="button" style="margin-top:5px;border:0;background:none;color:#6f4aa8;font-weight:700;cursor:pointer;padding:0;">Change code</button>
+  </div>
+</div>
+
+
+<div class="toolbar">
+  <button class="btn primary" id="jumpToday">Jump to today</button>
+  <button class="btn undo" id="undoBtn" type="button" disabled>↶ Undo</button>
+  <button class="btn" id="exportBtn">Export backup</button>
+  <button class="btn" id="importBtn">Import backup</button>
+  <input type="file" id="importFile" accept="application/json">
+</div>
+
+<div class="hero">
+  <div class="sun-glow"></div>
+  <div class="cloud cloud1"><div class="puff"></div><div class="puff"></div></div>
+  <div class="cloud cloud2"><div class="puff"></div><div class="puff"></div></div>
+
+  <div class="stars-corner" title="a little night court">
+    <span class="star" style="left:8%; top:12%; animation-delay:0s; font-size:.85rem;">✦</span>
+    <span class="star" style="left:20%; top:30%; animation-delay:.6s; font-size:.65rem;">✧</span>
+    <span class="star" style="left:5%; top:44%; animation-delay:1.1s; font-size:.9rem;">✦</span>
+    <span class="star" style="left:28%; top:8%; animation-delay:.3s; font-size:.6rem;">✧</span>
+    <span class="star" style="left:15%; top:52%; animation-delay:1.5s; font-size:.7rem;">✦</span>
+  </div>
+
+  <div class="castle-wrap" id="castleWrap" title="tap the castle">
+    <svg class="castle-svg" viewBox="0 0 120 100">
+      <rect x="8" y="55" width="104" height="40" fill="#9b8fae" opacity=".55"/>
+      <rect x="16" y="28" width="18" height="30" fill="#8a7ba0" opacity=".6"/>
+      <polygon points="16,28 25,14 34,28" fill="#4a3d6b" opacity=".65"/>
+      <rect x="86" y="28" width="18" height="30" fill="#8a7ba0" opacity=".6"/>
+      <polygon points="86,28 95,14 104,28" fill="#4a3d6b" opacity=".65"/>
+      <rect x="48" y="16" width="24" height="42" fill="#8f81a8" opacity=".6"/>
+      <polygon points="48,16 60,2 72,16" fill="#4a3d6b" opacity=".7"/>
+      <rect x="56" y="38" width="8" height="18" fill="#3a3050" opacity=".7"/>
+      <rect x="23" y="40" width="6" height="6" fill="#c9a24d" opacity=".7"/>
+      <rect x="91" y="40" width="6" height="6" fill="#c9a24d" opacity=".7"/>
+      <line x1="60" y1="2" x2="60" y2="-7" stroke="#4a3d6b" stroke-width="1.5" opacity=".6"/>
+      <path d="M60,-7 L69,-3 L60,1 Z" fill="var(--terracotta)" opacity=".8"/>
+    </svg>
+    <div class="speech-bubble mini-bubble castle-bubble" id="castleBubble"></div>
+  </div>
+
+  <div class="hero-inner">
+    <span class="eyebrow-script">become the professor</span>
+    <h1 class="title">SET Exam Prep</h1>
+    <div class="exam-dates" id="examDates"></div>
+  </div>
+
+  <div class="garden">
+    <div class="tree-wrap">
+      <svg viewBox="0 0 130 170">
+        <ellipse cx="65" cy="158" rx="52" ry="9" fill="#55397e" opacity=".28"/>
+        <!-- seed -->
+        <ellipse class="lvl" data-min="0" cx="65" cy="148" rx="7" ry="5" fill="#6b5540"/>
+        <!-- sprout -->
+        <g class="lvl" data-min="1">
+          <path d="M65,150 C60,130 68,120 65,105" stroke="#7c5bb0" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <ellipse cx="58" cy="118" rx="10" ry="6" fill="#9b7fd0" transform="rotate(-30 58 118)"/>
+          <ellipse cx="72" cy="112" rx="10" ry="6" fill="#9b7fd0" transform="rotate(20 72 112)"/>
+        </g>
+        <!-- sapling trunk + small crown -->
+        <g class="lvl" data-min="2">
+          <path d="M65,150 C62,120 68,95 65,80" stroke="#5a4530" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <circle cx="65" cy="70" r="28" fill="#9b7fd0"/>
+          <circle cx="46" cy="85" r="16" fill="#9b7fd0"/>
+          <circle cx="84" cy="85" r="16" fill="#9b7fd0"/>
+        </g>
+        <!-- bigger tree crown (replaces sapling look) -->
+        <g class="lvl" data-min="3">
+          <circle cx="65" cy="58" r="34" fill="#7c5bb0"/>
+          <circle cx="38" cy="80" r="22" fill="#7c5bb0"/>
+          <circle cx="92" cy="80" r="22" fill="#7c5bb0"/>
+          <circle cx="65" cy="88" r="22" fill="#9b7fd0"/>
+        </g>
+        <!-- starlit blossoms for full bloom -->
+        <g class="lvl" data-min="4">
+          <circle cx="40" cy="55" r="4" fill="#c9a24d"/>
+          <circle cx="85" cy="48" r="4" fill="#c9a24d"/>
+          <circle cx="60" cy="35" r="4" fill="#f0e9f5"/>
+          <circle cx="95" cy="75" r="4" fill="#c9a24d"/>
+          <circle cx="30" cy="78" r="4" fill="#f0e9f5"/>
+          <circle cx="70" cy="100" r="4" fill="#c9a24d"/>
+        </g>
+      </svg>
+      <div class="tree-caption" id="treeCaption">a tiny seed</div>
+      <span class="peek-cat" id="peekCat" title="hi">🐈</span>
+      <div class="speech-bubble mini-bubble peek-bubble" id="peekCatBubble"></div>
+    </div>
+
+    <div class="cat-wrap" id="catWrap">
+      <div class="speech-bubble" id="speechBubble">hi! tap me~</div>
+      <svg class="cat-svg" id="catSvg" viewBox="0 0 140 140">
+        <path class="tail-rest" d="M100,112 C132,102 132,58 104,52" stroke="#2b2340" stroke-width="14" fill="none" stroke-linecap="round"/>
+        <path class="tail-up" d="M104,112 C138,88 136,36 106,34" stroke="#2b2340" stroke-width="14" fill="none" stroke-linecap="round"/>
+        <ellipse cx="68" cy="98" rx="40" ry="32" fill="#241d38"/>
+        <ellipse cx="44" cy="120" rx="10" ry="13" fill="#241d38"/>
+        <ellipse cx="90" cy="120" rx="10" ry="13" fill="#241d38"/>
+        <circle cx="68" cy="56" r="33" fill="#241d38"/>
+        <path d="M42,38 L34,14 L56,32 Z" fill="#241d38"/>
+        <path d="M94,38 L104,14 L82,32 Z" fill="#241d38"/>
+        <path d="M43,33 L39,22 L52,31 Z" fill="#d19bc4"/>
+        <path d="M93,33 L97,22 L84,31 Z" fill="#d19bc4"/>
+        <circle cx="50" cy="66" r="6" fill="#d19bc4" opacity=".55"/>
+        <circle cx="86" cy="66" r="6" fill="#d19bc4" opacity=".55"/>
+        <g class="eyes-open"><ellipse cx="56" cy="54" rx="3.6" ry="4.8" fill="#f0c94d"/><ellipse cx="80" cy="54" rx="3.6" ry="4.8" fill="#f0c94d"/></g>
+        <g class="eyes-closed"><path d="M50,54 Q56,48 62,54" stroke="#f0c94d" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M74,54 Q80,48 86,54" stroke="#f0c94d" stroke-width="2.4" fill="none" stroke-linecap="round"/></g>
+        <g class="eyes-sleep"><line x1="50" y1="55" x2="62" y2="55" stroke="#c9b8e0" stroke-width="2.4" stroke-linecap="round"/><line x1="74" y1="55" x2="86" y2="55" stroke="#c9b8e0" stroke-width="2.4" stroke-linecap="round"/></g>
+        <path class="mouth-default" d="M68,62 L68,66 M68,66 Q62,70 58,66 M68,66 Q74,70 78,66" stroke="#c9b8e0" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path class="mouth-big" d="M56,64 Q68,80 80,64" stroke="#c9b8e0" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <g class="zzz" fill="#c9b8e0" font-family="Cinzel" font-size="14"><text x="96" y="34">z</text><text x="106" y="22" font-size="10">z</text></g>
+        <g class="sparkles" fill="#c9a24d"><path d="M20,40 l3,7 l7,3 l-7,3 l-3,7 l-3,-7 l-7,-3 l7,-3 z"/><path d="M118,70 l2,5 l5,2 l-5,2 l-2,5 l-2,-5 l-5,-2 l5,-2 z"/></g>
+      </svg>
+    </div>
+
+    <div class="dragon-wrap" id="dragonWrap" title="tap the dragon">
+      <svg class="dragon-svg" id="dragonSvg" viewBox="0 0 100 90">
+        <ellipse cx="50" cy="60" rx="34" ry="20" fill="#4a6b8a"/>
+        <path d="M20,55 C6,50 4,34 18,28 C14,40 20,48 28,50 Z" fill="#3a5570"/>
+        <path d="M80,55 C94,50 96,34 82,28 C86,40 80,48 72,50 Z" fill="#3a5570"/>
+        <circle cx="66" cy="46" r="16" fill="#4a6b8a"/>
+        <path d="M40,60 Q20,68 10,62" stroke="#4a6b8a" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <path d="M4,58 l8,-4 l0,10 Z" fill="#4a6b8a"/>
+        <path d="M56,32 l4,-8 l4,8 Z" fill="#c9a24d"/>
+        <path d="M70,32 l4,-8 l4,8 Z" fill="#c9a24d"/>
+        <g class="dragon-eyes-closed"><path d="M58,46 q4,-4 8,0" stroke="#2f2140" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M70,46 q4,-4 8,0" stroke="#2f2140" stroke-width="1.6" fill="none" stroke-linecap="round"/></g>
+        <g class="dragon-eyes-open"><circle cx="62" cy="45" r="2.2" fill="#f0c94d"/><circle cx="74" cy="45" r="2.2" fill="#f0c94d"/></g>
+        <g class="dragon-zzz" fill="#c9b8e0" font-family="Cinzel" font-size="10"><text x="82" y="30">z</text><text x="90" y="20" font-size="7">z</text></g>
+        <g class="dragon-fire" fill="var(--terracotta)"><path d="M66,58 q4,6 0,10 q-4,-4 0,-10"/></g>
+      </svg>
+      <div class="speech-bubble mini-bubble dragon-bubble" id="dragonBubble"></div>
+    </div>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat-chip" id="streakChip">🌤 start your streak today</div>
+    <div class="stat-chip" id="overallChip">0 tasks watered</div>
+  </div>
+</div>
+
+<main>
+
+  <div class="section-banner">
+    <span class="corner-deco corner-castle">🏰</span>
+    <span class="corner-deco corner-feather">🪶</span>
+    <span class="chapter-num">✦ Chapter II ✦ The Quest Begins</span>
+    <h2><span class="leaf">🍃</span> Priority</h2>
+    <div class="sub">what to hit first, unit by unit</div>
+  </div>
+  <div id="priorityTables"></div>
+
+  <div class="section-banner">
+    <span class="corner-deco corner-library">📚</span>
+    <span class="corner-deco corner-scroll">📜</span>
+    <span class="chapter-num">✦ Chapter III ✦ The Library of Knowledge</span>
+    <h2><span class="leaf">📖</span> Study Resources</h2>
+    <div class="sub" id="studyFromLabel">study from —</div>
+  </div>
+  <div class="shelf-row" id="shelfRow" title="tap a book">
+    <span class="book" style="background:var(--terracotta)"></span>
+    <span class="book" style="background:var(--sage)"></span>
+    <span class="book tall" style="background:var(--mustard)"></span>
+    <span class="book" style="background:var(--sky-blue)"></span>
+    <span class="book tall" style="background:var(--blush)"></span>
+    <span class="lib-cat">🐱</span>
+    <div class="speech-bubble mini-bubble shelf-bubble" id="shelfBubble"></div>
+  </div>
+  <div id="resourcesCard"></div>
+
+  <div class="section-banner">
+    <span class="corner-deco corner-dragon">🐉</span>
+    <span class="corner-deco corner-lantern">🏮</span>
+    <span class="chapter-num">✦ Chapter IV ✦ The Path of Progress</span>
+    <h2><span class="leaf">🏆</span> Score Tally</h2>
+    <div class="sub">every mock, every PYQ, logged</div>
+  </div>
+  <div id="scoreTally"></div>
+
+  <div class="section-banner">
+    <span class="corner-deco corner-cat">🐱</span>
+    <span class="corner-deco corner-mushroom">🍄</span>
+    <span class="chapter-num">✦ Chapter V ✦ The Arcane Archives</span>
+    <h2><span class="leaf">🐾</span> Daily Tracking</h2>
+    <div class="sub fantasy-label">just write what u did today</div>
+  </div>
+  <div id="months"></div>
+
+</main>
+
+<footer>
+  Draw a tick with your finger or Apple Pencil, or just tap. Tap the cat for a little encouragement.<br>
+  Your changes are saved on this device and synced to the cloud when connected. Use <b>Export backup</b> now and then as an extra safety copy.
+
+<div id="cloudSetupNote" style="max-width:760px;margin:12px auto 0;padding:10px 12px;
+  border-radius:12px;background:rgba(244,231,201,.9);color:#2f2140;font-size:12px;line-height:1.45;border:1px solid rgba(201,162,77,.3);">
+  ☁️ <strong>Device sync:</strong> This version keeps an offline browser backup and
+  can sync the same tracker between laptop + iPad through Supabase. Open <b>📱 Devices</b>
+  to see the sync code, then use that same code on your other devices.
+</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+"use strict";
+
+/* ================= CONFIG ================= */
+var START = new Date(2026,8,5);
+var END   = new Date(2026,11,31);
+var STORAGE_KEY = "spq_tracker_v3";
+var DEFAULT_TICK = "M7 18 L15 26 L27 8";
+
+var CP_ORDER = [
+  {key:"2026-09-28", name:"TG SET", dateLabel:"Sept 28"},
+  {key:"2026-10-11", name:"KSET", dateLabel:"Oct 11"},
+  {key:"2026-12-31", name:"UGC NET", dateLabel:"Dec 31"}
+];
+var CHECKPOINTS = {
+  "2026-09-28": {name:"TG SET", label:"TG SET Exam · Day 1"},
+  "2026-09-29": {name:"TG SET", label:"TG SET Exam · Day 2"},
+  "2026-09-30": {name:"TG SET", label:"TG SET Exam · Day 3"},
+  "2026-10-11": {name:"KSET",   label:"KSET Exam"},
+  "2026-12-31": {name:"UGC NET",label:"UGC NET Exam"}
+};
+
+var MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+var WEEKDAY_NAMES = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+var DEFAULT_PRIORITY_TABLES = [
+  { title:"General / Teaching Aptitude Paper", rows:[
+    ["Research Aptitude","14.7%","Extreme"],
+    ["Communication","14.1%","Extreme"],
+    ["Teaching Aptitude","11.8%","Very High"],
+    ["ICT","9.4%","High"],
+    ["People, Development & Environment","9.4%","High"],
+    ["Comprehension","9.4%","High"],
+    ["Mathematical Reasoning","8.8%","High"],
+    ["Higher Education System","8.2%","High"],
+    ["Logical Reasoning","8.2%","High"],
+    ["Data Interpretation","5.9%","Moderate"]
+  ]},
+  { title:"Subject Paper", rows:[
+    ["U5 — Learning, Memory, Perception, Attention","26.4%","Extreme"],
+    ["U6 — Thinking, Intelligence, Creativity","14.0%","Extreme"],
+    ["U7 — Personality, Motivation, Emotion, Stress","12.4%","Very High"],
+    ["U9 — Human Development & Interventions","12.4%","Very High"],
+    ["U4 — Biological Basis of Behaviour","10.8%","High"],
+    ["U3 — Psychological Testing","6.8%","High"],
+    ["U8 — Social Psychology","6.8%","High"],
+    ["U2 — Research Methodology & Statistics","6.4%","High"],
+    ["U10 — Emerging Areas","2.0%","Cover once"],
+    ["U1 — Emergence of Psychology","0.4%","Cover once"]
+  ]}
+];
+
+var DEFAULT_RESOURCES = ["Unacademy lectures","Previous year question paper","Textbook","Guide books","Notes","Error log","Crash course"];
+
+var SCORE_CATEGORIES = [
+  {id:"fullMock", label:"Full Mocks"},
+  {id:"fullPyqP1", label:"Full PYQ — Paper 1"},
+  {id:"fullPyqP2", label:"Full PYQ — Paper 2"},
+  {id:"unitPyqP1", label:"Unit-wise — Paper 1"},
+  {id:"unitPyqP2", label:"Unit-wise — Paper 2"}
+];
+
+var QUOTES = {
+  sleep: ["Shh… dreaming of your next study session 💤","Even the professor naps sometimes.","Wake me with your first tick today!"],
+  idle: ["One small step, one big castle.","You've begun — that's the hardest part.","Little by little, a little becomes a lot."],
+  happy: ["Look at you go! The tree loves it 🌿","Halfway there — don't stop now.","This is the good stuff, keep going."],
+  cheer: ["YATTA! Today is done! 🎉","You watered the whole garden today!","The professor is smiling somewhere."]
+};
+
+/* ---------- whimsy line pools (castle / dragon / peek-cat / library) ---------- */
+var CASTLE_LINES = [
+  "the towers hold every unit you've ever conquered 🏰",
+  "somewhere in this castle, a library card has your name on it",
+  "one more brick in your castle of knowledge",
+  "🦇 Rhysand: even Velaris keeps a study schedule.",
+  "🎨 Feyre: every tower was once just a sketch.",
+  "the castle gates creak open a little wider for you",
+  "a High Lord once said the same thing: begin, then begin again"
+];
+var DRAGON_LINES = [
+  "the dragon cracks one eye open, mildly impressed",
+  "rawr (that means 'proud of you' in dragon)",
+  "guarding your notes with its life, mostly by napping",
+  "the dragon stretches its wings — someone's on a roll!",
+  "you have studied for a while now. the dragon shall permit a snack.",
+  "even the darkest night eventually gives way to dawn, says the dragon, unhelpfully"
+];
+var PEEK_LINES = [
+  "mrow~ 🐈",
+  "the tree-cat blinks slowly at you (a compliment)",
+  "purrrr, keep going",
+  "the books demand sacrifice. preferably snacks.",
+  "you are doing better than you think 🐈‍⬛"
+];
+var LIBRARY_LINES = [
+  "the shelf rustles: consistency is the best plot twist 📚",
+  "a dusty spine falls open to exactly the page you needed",
+  "the librarian nods approvingly from the shadows",
+  "🎨 Feyre would've dog-eared this page too.",
+  "even Nesta would admit that was productive",
+  "a rare quote appears on the spine, then vanishes ✨"
+];
+var CELEBRATE_LINES = [
+  "Nice! One more task tamed 🐾",
+  "Look at you, absolutely thriving ✨",
+  "The professor nods in approval 🎓",
+  "Small step, big castle 🏰",
+  "That's the spirit, keep going!",
+  "Another page in your story, well done 📖",
+  "🦇 Rhysand: consistency looks good on you.",
+  "🎨 Feyre: another page turned — keep going.",
+  "The Night Court believes in you. Unfortunately, so does your textbook.",
+  "Quest complete. The realm glows a little brighter. 🌙"
+];
+
+var TODAY = new Date(); TODAY.setHours(0,0,0,0);
+
+/* ================= STATE ================= */
+
+/* =========================
+   CLOUD SYNC (Supabase)
+   =========================
+   Shared cloud state for laptop + iPad.
+   localStorage remains the offline cache.
+*/
+
+const SUPABASE_URL = "https://qbxyssijdudsjcztwjwi.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_VQ1OEpe22tANHFCCzKISpQ_te2kGULU";
+const SYNC_CODE_KEY = "spq_sync_code";
+function getSyncCode(){
+  let code = localStorage.getItem(SYNC_CODE_KEY);
+  if(!code){
+    code = "realm-" + Math.random().toString(36).slice(2,8) + "-" + Math.random().toString(36).slice(2,6);
+    localStorage.setItem(SYNC_CODE_KEY, code);
+  }
+  return code;
+}
+let SUPABASE_ROW_ID = getSyncCode();
+
+let cloudClient = null;
+let cloudSyncEnabled = false;
+let cloudSyncTimer = null;
+let cloudSyncBusy = false;
+let lastCloudUpdatedAt = null;
+
+function setSyncStatus(message, kind){
+  const el = document.getElementById("syncStatus");
+  if (!el) return;
+  el.textContent = message;
+  el.dataset.kind = kind || "";
+}
+
+function setSyncButtonState(){
+  const btn = document.getElementById("syncNowBtn");
+  if (!btn) return;
+  btn.disabled = !cloudSyncEnabled || cloudSyncBusy;
+  btn.textContent = cloudSyncBusy ? "☁️ Syncing…" : "☁️ Sync now";
+}
+
+function initSyncCodeUI(){
+  const code = getSyncCode();
+  const value = document.getElementById("syncCodeValue");
+  const box = document.getElementById("syncCodeBox");
+  const show = document.getElementById("syncCodeBtn");
+  const change = document.getElementById("changeSyncCodeBtn");
+  if(value) value.textContent = code;
+  if(show) show.addEventListener("click", function(){
+    if(box) box.style.display = box.style.display === "none" ? "block" : "none";
+  });
+  if(change) change.addEventListener("click", function(){
+    const next = prompt("Enter the sync code you want to use on all your devices:", code);
+    if(!next || !next.trim()) return;
+    SUPABASE_ROW_ID = next.trim().replace(/\s+/g,"-").slice(0,80);
+    localStorage.setItem(SYNC_CODE_KEY, SUPABASE_ROW_ID);
+    if(value) value.textContent = SUPABASE_ROW_ID;
+    setSyncStatus("☁️ Code changed — sync now", "syncing");
+  });
+}
+
+async function pushCloudState(){
+  if (!cloudClient || !cloudSyncEnabled) {
+    throw new Error("Cloud sync is not connected.");
+  }
+
+  const now = new Date().toISOString();
+  const payloadState = JSON.parse(JSON.stringify(state));
+  payloadState._cloudUpdatedAt = now;
+
+  const { data, error } = await cloudClient
+    .from("tracker_state")
+    .upsert({
+      id: SUPABASE_ROW_ID,
+      state: payloadState,
+      updated_at: now
+    }, { onConflict: "id" })
+    .select("updated_at")
+    .single();
+
+  if (error) throw error;
+
+  const cloudTime = (data && data.updated_at) || now;
+  state._cloudUpdatedAt = cloudTime;
+  state._localChangedAt = 0;
+  lastCloudUpdatedAt = cloudTime;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+async function pullCloudState(){
+  if (!cloudClient || !cloudSyncEnabled) {
+    throw new Error("Cloud sync is not connected.");
+  }
+
+  const { data, error } = await cloudClient
+    .from("tracker_state")
+    .select("id,state,updated_at")
+    .eq("id", SUPABASE_ROW_ID)
+    .maybeSingle();
+
+  if (error) throw error;
+
+  if (!data || !data.state) {
+    await pushCloudState();
+    return;
+  }
+
+  const cloudTime = data.updated_at || new Date().toISOString();
+  const cloudStamp = new Date(cloudTime).getTime();
+
+  let localState = null;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    localState = raw ? migrate(JSON.parse(raw)) : null;
+  } catch(e) {}
+
+  const localStamp = localState && localState._localChangedAt
+    ? Number(localState._localChangedAt) : 0;
+
+  if (localState && localStamp > cloudStamp) {
+    state = localState;
+    await pushCloudState();
+    return;
+  }
+
+  state = migrate(data.state);
+  state._cloudUpdatedAt = cloudTime;
+  state._localChangedAt = 0;
+  lastCloudUpdatedAt = cloudTime;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  renderAll();
+}
+
+async function initCloudSync(){
+  try {
+    if (!window.supabase || !window.supabase.createClient) {
+      throw new Error("Supabase library did not load.");
+    }
+
+    cloudClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
+
+    cloudSyncEnabled = true;
+    setSyncStatus("☁️ Connecting…", "syncing");
+    setSyncButtonState();
+
+    await pullCloudState();
+
+    cloudClient
+      .channel("tracker-state-sync")
+      .on("postgres_changes", {
+        event: "*",
+        schema: "public",
+        table: "tracker_state",
+        filter: "id=eq." + SUPABASE_ROW_ID
+      }, payload => {
+        if (payload.eventType === "DELETE") return;
+
+        const remote = payload.new && payload.new.state;
+        const remoteTime = payload.new && payload.new.updated_at;
+        if (!remote) return;
+
+        const remoteStamp = remoteTime
+          ? new Date(remoteTime).getTime() : 0;
+        const localEditStamp = Number(state._localChangedAt || 0);
+
+        if (localEditStamp && localEditStamp > remoteStamp) return;
+
+        state = migrate(remote);
+        state._cloudUpdatedAt = remoteTime || new Date().toISOString();
+        state._localChangedAt = 0;
+        lastCloudUpdatedAt = state._cloudUpdatedAt;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        renderAll();
+        setSyncStatus("☁️ Synced", "ok");
+      })
+      .subscribe(status => {
+        if (status === "SUBSCRIBED") {
+          setSyncStatus("☁️ Synced", "ok");
+          setSyncButtonState();
+        }
+      });
+
+  } catch(err) {
+    console.error("Cloud sync setup failed:", err);
+    cloudSyncEnabled = false;
+    setSyncStatus("⚠️ Cloud sync unavailable", "error");
+    setSyncButtonState();
+  }
+}
+
+function scheduleCloudSave(){
+  if (!cloudSyncEnabled) return;
+
+  clearTimeout(cloudSyncTimer);
+  cloudSyncTimer = setTimeout(async () => {
+    if (cloudSyncBusy) {
+      scheduleCloudSave();
+      return;
+    }
+
+    cloudSyncBusy = true;
+    setSyncButtonState();
+    setSyncStatus("☁️ Saving…", "syncing");
+
+    try {
+      await pushCloudState();
+      setSyncStatus("☁️ Synced", "ok");
+    } catch(err) {
+      console.error("Cloud save failed:", err);
+      setSyncStatus("⚠️ Save failed — local copy kept", "error");
+    } finally {
+      cloudSyncBusy = false;
+      setSyncButtonState();
+    }
+  }, 700);
+}
+
+async function manualCloudSync(){
+  if (!cloudSyncEnabled || cloudSyncBusy) return;
+
+  cloudSyncBusy = true;
+  setSyncButtonState();
+  setSyncStatus("☁️ Syncing…", "syncing");
+
+  try {
+    const localStamp = Number(state._localChangedAt || 0);
+    const cloudStamp = lastCloudUpdatedAt
+      ? new Date(lastCloudUpdatedAt).getTime() : 0;
+
+    if (localStamp > cloudStamp) {
+      await pushCloudState();
+      renderAll();
+      setSyncStatus("☁️ Saved to cloud", "ok");
+    } else {
+      await pullCloudState();
+      setSyncStatus("☁️ Synced", "ok");
+    }
+  } catch(err) {
+    console.error("Manual cloud sync failed:", err);
+    setSyncStatus("⚠️ Sync failed — local copy kept", "error");
+  } finally {
+    cloudSyncBusy = false;
+    setSyncButtonState();
+  }
+}
+
+function cloudAwareSaveState(){
+  state._localChangedAt = Date.now();
+
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch(e) {
+    console.error("Local save failed:", e);
+  }
+
+  scheduleCloudSave();
+}
+
+var state = loadState();
+function loadState(){
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return migrate(JSON.parse(raw));
+  }catch(e){}
+  return freshState();
+}
+function freshState(){
+  var s = {
+    studyFrom: iso(START),
+    priorityTables: DEFAULT_PRIORITY_TABLES.map(function(t){
+      return { title:t.title, rows: t.rows.map(function(r){ return {id:uid(), unit:r[0], pyq:r[1], priority:r[2]}; }) };
+    }),
+    resources: DEFAULT_RESOURCES.map(function(r){ return {id:uid(), text:r, done:false, path:null}; }),
+    scores: {},
+    days: {}
+  };
+  SCORE_CATEGORIES.forEach(function(c){ s.scores[c.id] = []; });
+  return s;
+}
+function migrate(s){
+  if(!s.priorityTables) s.priorityTables = freshState().priorityTables;
+  if(!s.resources) s.resources = freshState().resources;
+  if(!s.scores) s.scores = {};
+  SCORE_CATEGORIES.forEach(function(c){ if(!s.scores[c.id]) s.scores[c.id] = []; });
+  if(!s.days) s.days = {};
+  if(!s.studyFrom) s.studyFrom = iso(START);
+  return s;
+}
+/* ================= UNDO HISTORY =================
+   Each save captures the previously persisted state first.
+   This makes Undo work across checklist ticks, added/deleted tasks,
+   score edits, notes, and other actions that already call saveState(). */
+var undoStack = [];
+var MAX_UNDO = 50;
+var suppressUndoCapture = false;
+
+function updateUndoButton(){
+  var btn = document.getElementById("undoBtn");
+  if(!btn) return;
+  btn.disabled = undoStack.length === 0;
+  btn.title = undoStack.length ? "Undo last saved change" : "Nothing to undo";
+}
+
+function captureUndoSnapshot(){
+  if(suppressUndoCapture) return;
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return;
+    /* Avoid stacking identical states. */
+    if(undoStack.length && undoStack[undoStack.length-1] === raw) return;
+    undoStack.push(raw);
+    if(undoStack.length > MAX_UNDO) undoStack.shift();
+  }catch(e){
+    console.warn("Undo snapshot failed:", e);
+  }
+}
+
+function saveState(){
+  captureUndoSnapshot();
+  cloudAwareSaveState();
+  updateUndoButton();
+}
+
+function undoLastChange(){
+  if(!undoStack.length) return;
+  var raw = undoStack.pop();
+  try{
+    suppressUndoCapture = true;
+    state = migrate(JSON.parse(raw));
+    cloudAwareSaveState();
+    renderAll();
+  }catch(e){
+    console.error("Undo failed:", e);
+  }finally{
+    suppressUndoCapture = false;
+    updateUndoButton();
+  }
+}
+function uid(){ return "id"+Date.now().toString(36)+Math.floor(Math.random()*10000).toString(36); }
+function dayState(key){
+  if(!state.days[key]) state.days[key] = { tasks:[], reps:"", notes:"" };
+  if(!state.days[key].tasks) state.days[key].tasks = [];
+  return state.days[key];
+}
+
+/* ================= DATE HELPERS ================= */
+function iso(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+function pad(n){ return n<10 ? "0"+n : ""+n; }
+function sameDay(a,b){ return iso(a)===iso(b); }
+function addDays(d,n){ var r=new Date(d); r.setDate(r.getDate()+n); return r; }
+function fmtShort(d){ return MONTH_NAMES[d.getMonth()].slice(0,3)+" "+d.getDate(); }
+function allDatesInRange(){ var arr=[]; var d=new Date(START); while(d<=END){ arr.push(new Date(d)); d=addDays(d,1);} return arr; }
+var ALL_DATES = allDatesInRange();
+
+/* ================= PENCIL CHECKBOX ================= */
+function pointsToPath(pts){ return "M"+pts.map(function(p){ return p[0].toFixed(1)+" "+p[1].toFixed(1); }).join(" L "); }
+function makePencilBox(item, onChange){
+  var wrap = document.createElement("div");
+  wrap.className = "pencil-box";
+  wrap.innerHTML =
+    "<svg viewBox='0 0 34 34'>"+
+      "<path class='box-outline' d='M6,4 C2,4 2,4 2,10 L2,26 C2,32 2,32 8,32 L26,32 C32,32 32,32 32,26 L32,8 C32,3 32,3 26,3 Z'/>"+
+      "<path class='tick-path' d=''/>"+
+    "</svg>";
+  var pathEl = wrap.querySelector(".tick-path");
+  function render(){
+    if(item.path){ pathEl.setAttribute("d", item.path); pathEl.style.opacity = item.done ? 1:0; }
+    else if(item.done){ pathEl.setAttribute("d", DEFAULT_TICK); pathEl.style.opacity = 1; }
+    else { pathEl.style.opacity = 0; }
+  }
+  render();
+  var drawing=false, points=[], startPt=null, moved=false;
+  function getPt(e){
+    var r = wrap.getBoundingClientRect();
+    return [(e.clientX-r.left)/r.width*34, (e.clientY-r.top)/r.height*34];
+  }
+  wrap.addEventListener("pointerdown", function(e){
+    e.preventDefault(); drawing=true; moved=false; startPt=getPt(e); points=[startPt];
+    try{ wrap.setPointerCapture(e.pointerId); }catch(err){}
+  });
+  wrap.addEventListener("pointermove", function(e){
+    if(!drawing) return;
+    var p = getPt(e); var dx=p[0]-startPt[0], dy=p[1]-startPt[1];
+    if(Math.hypot(dx,dy) > 2.5) moved=true;
+    points.push(p);
+    if(moved){ pathEl.style.opacity=1; pathEl.setAttribute("d", pointsToPath(points)); }
+  });
+  function finish(){
+    if(!drawing) return; drawing=false;
+    var wasDone = item.done;
+    if(moved && points.length>2){ item.done=true; item.path=pointsToPath(points); }
+    else { item.done=!item.done; item.path=null; }
+    if(item.done && !wasDone) celebrateTask();
+    onChange(); render();
+  }
+  wrap.addEventListener("pointerup", finish);
+  wrap.addEventListener("pointercancel", finish);
+  return wrap;
+}
+
+/* ================= HERO: DATES / CAT / TREE / STREAK ================= */
+function renderExamDates(){
+  var el = document.getElementById("examDates");
+  el.innerHTML = "";
+  CP_ORDER.forEach(function(cp){
+    var target = new Date(cp.key+"T00:00:00");
+    var diff = Math.round((target-TODAY)/86400000);
+    var cd = diff<0 ? "done" : (diff===0 ? "today" : diff+"d left");
+    var d = document.createElement("div");
+    d.className = "exam-date";
+    d.innerHTML = cp.name+" · "+cp.dateLabel+" <span class='cd'>("+cd+")</span>";
+    el.appendChild(d);
+  });
+}
+function hasDoneTasks(key){
+  var ds = state.days[key];
+  if(!ds) return false;
+  return ds.tasks.some(function(t){ return t.done; });
+}
+function computeStreak(){
+  var count=0; var cursor=new Date(TODAY);
+  if(!hasDoneTasks(iso(cursor))) cursor = addDays(cursor,-1);
+  while(cursor>=START){
+    if(hasDoneTasks(iso(cursor))){ count++; cursor=addDays(cursor,-1); } else break;
+  }
+  return count;
+}
+function totalDoneOverall(){
+  var done=0;
+  state.resources.forEach(function(r){ if(r.done) done++; });
+  Object.keys(state.days).forEach(function(k){
+    state.days[k].tasks.forEach(function(t){ if(t.done) done++; });
+  });
+  return done;
+}
+function treeStage(doneCount){
+  if(doneCount>=150) return 4;
+  if(doneCount>=60) return 3;
+  if(doneCount>=20) return 2;
+  if(doneCount>=5) return 1;
+  return 0;
+}
+var TREE_CAPTIONS = ["a tiny seed","a little sprout 🌱","growing sapling 🌿","a proper tree 🌳","in full bloom 🌸"];
+
+function renderGarden(){
+  var done = totalDoneOverall();
+  var stage = treeStage(done);
+  document.querySelectorAll(".tree-wrap .lvl").forEach(function(el){
+    var min = parseInt(el.getAttribute("data-min"),10);
+    el.style.display = (min<=stage) ? "block" : "none";
+  });
+  document.getElementById("treeCaption").textContent = TREE_CAPTIONS[stage];
+
+  var streak = computeStreak();
+  document.getElementById("streakChip").textContent = streak>0 ? ("🔥 "+streak+" day streak") : "🌤 start your streak today";
+  document.getElementById("overallChip").textContent = done+" tasks watered";
+
+  updateCatMood();
+}
+function todayRatio(){
+  var ds = state.days[iso(TODAY)];
+  if(!ds || ds.tasks.length===0) return {total:0, done:0};
+  var done = 0; ds.tasks.forEach(function(t){ if(t.done) done++; });
+  return {total:ds.tasks.length, done:done};
+}
+function catMood(){
+  var r = todayRatio();
+  if(r.total===0) return "idle";
+  var ratio = r.done/r.total;
+  if(ratio<=0) return "sleep";
+  if(ratio<0.5) return "idle";
+  if(ratio<1) return "happy";
+  return "cheer";
+}
+function setSpeech(mood, forceRandom){
+  var pool = QUOTES[mood] || QUOTES.idle;
+  var idx = forceRandom ? Math.floor(Math.random()*pool.length) : 0;
+  document.getElementById("speechBubble").textContent = pool[idx];
+}
+function updateCatMood(){
+  var mood = catMood();
+  var cat = document.getElementById("catSvg");
+  cat.className = "cat-svg mood-"+mood;
+  setSpeech(mood, false);
+  var dragon = document.getElementById("dragonSvg");
+  if(dragon){ dragon.classList.toggle("awake", mood==="happy" || mood==="cheer"); }
+}
+document.getElementById("catWrap").addEventListener("click", function(){
+  var mood = catMood();
+  setSpeech(mood, true);
+  var cat = document.getElementById("catSvg");
+  cat.style.transform = "scale(1.06)";
+  setTimeout(function(){ cat.style.transform = ""; }, 180);
+});
+
+/* ================= WHIMSY: castle / dragon / peek-cat / shelf ================= */
+function showBubble(el, text, ms){
+  if(!el) return;
+  el.textContent = text;
+  el.style.display = "block";
+  el.style.opacity = 0;
+  requestAnimationFrame(function(){ el.style.opacity = 1; });
+  clearTimeout(el._hideTimer);
+  el._hideTimer = setTimeout(function(){
+    el.style.opacity = 0;
+    setTimeout(function(){ el.style.display = "none"; }, 220);
+  }, ms || 2200);
+}
+function pickLine(pool){ return pool[Math.floor(Math.random()*pool.length)]; }
+
+var castleWrapEl = document.getElementById("castleWrap");
+if(castleWrapEl){
+  castleWrapEl.addEventListener("click", function(){
+    showBubble(document.getElementById("castleBubble"), pickLine(CASTLE_LINES));
+  });
+}
+var dragonWrapEl = document.getElementById("dragonWrap");
+if(dragonWrapEl){
+  dragonWrapEl.addEventListener("click", function(){
+    var svg = document.getElementById("dragonSvg");
+    svg.classList.add("puff");
+    setTimeout(function(){ svg.classList.remove("puff"); }, 400);
+    showBubble(document.getElementById("dragonBubble"), pickLine(DRAGON_LINES));
+  });
+}
+var peekCatEl = document.getElementById("peekCat");
+if(peekCatEl){
+  peekCatEl.addEventListener("click", function(e){
+    e.stopPropagation();
+    showBubble(document.getElementById("peekCatBubble"), pickLine(PEEK_LINES));
+  });
+}
+var shelfRowEl = document.getElementById("shelfRow");
+if(shelfRowEl){
+  shelfRowEl.addEventListener("click", function(){
+    showBubble(document.getElementById("shelfBubble"), pickLine(LIBRARY_LINES));
+  });
+}
+
+/* ================= WHIMSY: task-complete celebration ================= */
+function spawnConfetti(layer, count){
+  var emojis = ["✨","🌸","🍃","⭐","🐾","🌙","🍄"];
+  for(var i=0;i<count;i++){
+    (function(){
+      var span = document.createElement("span");
+      span.className = "confetti-piece";
+      span.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      span.style.left = (6+Math.random()*88)+"%";
+      span.style.animationDelay = (Math.random()*0.35)+"s";
+      span.style.fontSize = (18+Math.random()*16)+"px";
+      layer.appendChild(span);
+      setTimeout(function(){ span.remove(); }, 2400);
+    })();
+  }
+}
+function celebrateTask(){
+  updateNightCourtProgress();
+  var layer = document.getElementById("celebrationLayer");
+  if(!layer) return;
+  var useDragon = Math.random() < 0.5;
+  var dim = document.createElement("div");
+  dim.className = "celeb-dim";
+  layer.appendChild(dim);
+  var toast = document.createElement("div");
+  toast.className = "celeb-toast " + (useDragon ? "celeb-dragon" : "celeb-cat");
+  toast.innerHTML =
+    "<div class='celeb-emoji'>"+(useDragon ? "🐉" : "🐱")+"</div>"+
+    "<div class='celeb-msg'>"+pickLine(CELEBRATE_LINES)+"</div>";
+  layer.appendChild(toast);
+  spawnConfetti(layer, 16);
+  setTimeout(function(){ toast.classList.add("celeb-out"); dim.classList.add("celeb-out"); }, 1900);
+  setTimeout(function(){ toast.remove(); dim.remove(); }, 2400);
+}
+
+/* ================= PRIORITY TABLES ================= */
+function priorityClass(text){
+  var t = (text||"").toLowerCase();
+  if(t.indexOf("extreme")>-1) return "extreme";
+  if(t.indexOf("very high")>-1) return "veryhigh";
+  if(t.indexOf("high")>-1) return "high";
+  if(t.indexOf("moderate")>-1) return "moderate";
+  if(t.indexOf("once")>-1) return "once";
+  return "high";
+}
+function renderPriorityTables(){
+  var container = document.getElementById("priorityTables");
+  container.innerHTML = "";
+  state.priorityTables.forEach(function(table, ti){
+    var card = document.createElement("div");
+    card.className = "card " + (ti%2? "tilt-b":"tilt-a");
+    card.innerHTML = "<div class='washi'></div>";
+    var h3 = document.createElement("h3");
+    var titleSpan = document.createElement("span");
+    titleSpan.contentEditable = "true"; titleSpan.textContent = table.title;
+    titleSpan.addEventListener("input", function(){ table.title = titleSpan.textContent; saveState(); });
+    var addBtn = document.createElement("button"); addBtn.className = "tiny-btn"; addBtn.textContent = "+ unit";
+    h3.appendChild(titleSpan); h3.appendChild(addBtn);
+    card.appendChild(h3);
+
+    var tbl = document.createElement("table"); tbl.className = "prio-table";
+    tbl.innerHTML = "<thead><tr><th>Unit</th><th>PYQ Share</th><th>Priority</th><th></th></tr></thead>";
+    var tbody = document.createElement("tbody"); tbl.appendChild(tbody);
+
+    function addRowEl(row){
+      var tr = document.createElement("tr");
+      var tdUnit = document.createElement("td"); tdUnit.contentEditable="true"; tdUnit.textContent = row.unit;
+      tdUnit.addEventListener("input", function(){ row.unit = tdUnit.textContent; saveState(); });
+      var tdPyq = document.createElement("td"); tdPyq.className="pyq-cell"; tdPyq.contentEditable="true"; tdPyq.textContent = row.pyq;
+      tdPyq.addEventListener("input", function(){ row.pyq = tdPyq.textContent; saveState(); });
+      var tdPrio = document.createElement("td"); tdPrio.className="prio-cell";
+      var badge = document.createElement("span"); badge.className = "prio-badge " + priorityClass(row.priority);
+      badge.contentEditable = "true"; badge.textContent = row.priority;
+      badge.addEventListener("input", function(){ row.priority = badge.textContent; saveState(); badge.className = "prio-badge " + priorityClass(row.priority); });
+      tdPrio.appendChild(badge);
+      var tdDel = document.createElement("td");
+      var del = document.createElement("button"); del.className="row-del-x"; del.textContent="✕";
+      del.addEventListener("click", function(){ table.rows = table.rows.filter(function(r){ return r.id!==row.id; }); saveState(); tr.remove(); });
+      tdDel.appendChild(del);
+      tr.appendChild(tdUnit); tr.appendChild(tdPyq); tr.appendChild(tdPrio); tr.appendChild(tdDel);
+      tbody.appendChild(tr);
+    }
+    table.rows.forEach(addRowEl);
+    addBtn.addEventListener("click", function(){
+      var row = {id:uid(), unit:"New unit", pyq:"", priority:"High"};
+      table.rows.push(row); saveState(); addRowEl(row);
+    });
+    card.appendChild(tbl);
+    container.appendChild(card);
+  });
+}
+
+/* ================= RESOURCES CHECKLIST ================= */
+function renderResources(){
+  document.getElementById("studyFromLabel").textContent = "study from " + fmtShort(new Date(state.studyFrom+"T00:00:00"));
+  var container = document.getElementById("resourcesCard");
+  container.innerHTML = "";
+  var card = document.createElement("div");
+  card.className = "card tilt-a";
+  card.innerHTML = "<div class='washi' style='background:var(--sage)'></div><h3><span>Resources checklist</span></h3>";
+  var list = document.createElement("div");
+  state.resources.forEach(function(item){
+    list.appendChild(buildTaskRow(item, function(){
+      saveState(); renderGarden();
+    }, true, function(){
+      state.resources = state.resources.filter(function(r){ return r.id !== item.id; });
+      saveState();
+      renderGarden();
+    }));
+  });
+  card.appendChild(list);
+
+  var addRow = document.createElement("div");
+  addRow.className = "add-row";
+  addRow.innerHTML = "<input type='text' placeholder='Add a resource…'><button>Add</button>";
+  var input = addRow.querySelector("input"), btn = addRow.querySelector("button");
+  function add(){
+    var v = input.value.trim(); if(!v) return;
+    var item = {id:uid(), text:v, done:false, path:null};
+    state.resources.push(item); saveState();
+    list.appendChild(buildTaskRow(item, function(){
+      saveState(); renderGarden();
+    }, true, function(){
+      state.resources = state.resources.filter(function(r){ return r.id !== item.id; });
+      saveState();
+      renderGarden();
+    }));
+    input.value = "";
+  }
+  btn.addEventListener("click", add);
+  input.addEventListener("keydown", function(e){ if(e.key==="Enter") add(); });
+  card.appendChild(addRow);
+  container.appendChild(card);
+}
+function buildTaskRow(item, onChange, allowDelete, onDelete){
+  var row = document.createElement("div");
+  row.className = "task-row" + (item.done ? " done":"");
+  var box = makePencilBox(item, function(){ row.classList.toggle("done", item.done); onChange(); });
+  row.appendChild(box);
+  var text = document.createElement("div");
+  text.className = "task-text"; text.contentEditable = "true"; text.textContent = item.text;
+  text.addEventListener("input", function(){ item.text = text.textContent; onChange(); });
+  row.appendChild(text);
+ if(allowDelete){
+  var del = document.createElement("button");
+  del.type = "button";
+  del.className = "row-del-x";
+  del.textContent = "✕";
+
+  del.addEventListener("click", function(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    if(typeof onDelete === "function"){
+      onDelete();
+    }
+
+    row.remove();
+  });
+
+  row.appendChild(del);
+}
+  return row;
+}
+
+/* ================= SCORE TALLY ================= */
+function renderScoreTally(){
+  var container = document.getElementById("scoreTally");
+  container.innerHTML = "";
+  var card = document.createElement("div");
+  card.className = "card tilt-b";
+  card.innerHTML = "<div class='washi' style='background:var(--mustard)'></div>";
+
+  var tabs = document.createElement("div"); tabs.className = "score-tabs";
+  var panels = document.createElement("div");
+
+  SCORE_CATEGORIES.forEach(function(cat, i){
+    var tab = document.createElement("button");
+    tab.className = "score-tab" + (i===0 ? " active":"");
+    tab.textContent = cat.label;
+    tab.addEventListener("click", function(){
+      tabs.querySelectorAll(".score-tab").forEach(function(t){ t.classList.remove("active"); });
+      panels.querySelectorAll(".score-panel").forEach(function(p){ p.classList.remove("active"); });
+      tab.classList.add("active");
+      document.getElementById("panel-"+cat.id).classList.add("active");
+    });
+    tabs.appendChild(tab);
+
+    var panel = document.createElement("div");
+    panel.className = "score-panel" + (i===0 ? " active":"");
+    panel.id = "panel-"+cat.id;
+    var tbl = document.createElement("table"); tbl.className = "score-grid";
+    tbl.innerHTML = "<thead><tr><th class='sno-col'>#</th><th>Test Name</th><th class='score-col'>Score</th><th></th></tr></thead>";
+    var tbody = document.createElement("tbody"); tbl.appendChild(tbody);
+
+    function renumber(){
+      Array.prototype.forEach.call(tbody.children, function(tr,idx){ tr.querySelector(".sno-col").textContent = idx+1; });
+    }
+    function addRowEl(rowData){
+      var tr = document.createElement("tr");
+      var tdN = document.createElement("td"); tdN.className="sno-col"; tdN.textContent = state.scores[cat.id].length;
+      var tdName = document.createElement("td");
+      var inName = document.createElement("input"); inName.type="text"; inName.placeholder="Test name"; inName.value = rowData.name||"";
+      inName.addEventListener("input", function(){ rowData.name = inName.value; saveState(); });
+      tdName.appendChild(inName);
+      var tdScore = document.createElement("td"); tdScore.className="score-col";
+      var inScore = document.createElement("input"); inScore.type="text"; inScore.placeholder="e.g. 244/300"; inScore.value = rowData.score||"";
+      inScore.addEventListener("input", function(){ rowData.score = inScore.value; saveState(); });
+      tdScore.appendChild(inScore);
+      var tdDel = document.createElement("td");
+      var del = document.createElement("button"); del.className="row-del-x"; del.textContent="✕";
+      del.addEventListener("click", function(){
+        state.scores[cat.id] = state.scores[cat.id].filter(function(r){ return r.id!==rowData.id; });
+        saveState(); tr.remove(); renumber();
+      });
+      tdDel.appendChild(del);
+      tr.appendChild(tdN); tr.appendChild(tdName); tr.appendChild(tdScore); tr.appendChild(tdDel);
+      tbody.appendChild(tr);
+    }
+    state.scores[cat.id].forEach(addRowEl);
+
+    var addRow = document.createElement("div"); addRow.className = "add-row";
+    addRow.innerHTML = "<button style='flex:1'>+ Add row</button>";
+    addRow.querySelector("button").addEventListener("click", function(){
+      var rowData = {id:uid(), name:"", score:""};
+      state.scores[cat.id].push(rowData); saveState();
+      addRowEl(rowData); renumber();
+    });
+
+    panel.appendChild(tbl); panel.appendChild(addRow);
+    panels.appendChild(panel);
+  });
+
+  card.appendChild(tabs); card.appendChild(panels);
+  container.appendChild(card);
+}
+
+/* ================= DAILY TRACKING ================= */
+function dayItemCounts(key){
+  var ds = dayState(key);
+  var total = ds.tasks.length, done = 0;
+  ds.tasks.forEach(function(t){ if(t.done) done++; });
+  return {total:total, done:done};
+}
+function renderMonths(){
+  var container = document.getElementById("months");
+  container.innerHTML = "";
+  var byMonth = {}; var order = [];
+  ALL_DATES.forEach(function(d){
+    var mk = d.getFullYear()+"-"+pad(d.getMonth()+1);
+    if(!byMonth[mk]){ byMonth[mk]=[]; order.push(mk); }
+    byMonth[mk].push(d);
+  });
+  order.forEach(function(mk){
+    var dates = byMonth[mk];
+    var monthIdx = parseInt(mk.split("-")[1],10)-1;
+    var block = document.createElement("div"); block.className = "month-block";
+    var details = document.createElement("details");
+    var isCurrentMonth = (TODAY.getFullYear()+"-"+pad(TODAY.getMonth()+1)) === mk;
+    if(isCurrentMonth) details.open = true;
+    var summary = document.createElement("summary"); summary.className = "month-summary";
+    summary.innerHTML = "<span>"+MONTH_NAMES[monthIdx]+" "+dates[0].getFullYear()+"</span><span class='chev'>›</span>";
+    details.appendChild(summary);
+    var wrap = document.createElement("div");
+    dates.forEach(function(d){ wrap.appendChild(buildDayCard(d)); });
+    details.appendChild(wrap);
+    block.appendChild(details);
+    container.appendChild(block);
+  });
+}
+function buildDayCard(d){
+  var key = iso(d);
+  var ds = dayState(key);
+  var isToday = sameDay(d, TODAY);
+  var cp = CHECKPOINTS[key];
+  var card = document.createElement("div");
+  card.className = "day-card" + (isToday?" today":"") + (cp?" exam":"");
+  card.id = "day-"+key;
+  if(isToday) card.classList.add("open");
+
+  var counts = dayItemCounts(key);
+  var head = document.createElement("div"); head.className = "day-head";
+  head.innerHTML =
+    "<div class='day-date'>"+d.getDate()+"<span class='wk'>"+WEEKDAY_NAMES[d.getDay()]+"</span></div>"+
+    "<div class='day-meta'>"+(cp ? "<div class='exam-line'>"+cp.label+"</div>" : "<div class='default-line'>just write what u did today</div>")+"</div>"+
+    "<div class='day-progress-num' data-progress='"+key+"'>"+counts.done+"/"+counts.total+"</div>"+
+    "<div class='day-chev'>›</div>";
+  head.addEventListener("click", function(){ card.classList.toggle("open"); });
+  card.appendChild(head);
+
+  var body = document.createElement("div"); body.className = "day-body";
+  var list = document.createElement("div"); list.className = "tasklist";
+  ds.tasks.forEach(function(item){
+    list.appendChild(buildTaskRow(item, function(){ saveState(); refreshDayProgress(key); renderGarden(); }, true, function(){
+      ds.tasks = ds.tasks.filter(function(t){ return t.id!==item.id; });
+      saveState(); refreshDayProgress(key); renderGarden();
+    }));
+  });
+  body.appendChild(list);
+
+  var addRow = document.createElement("div"); addRow.className = "add-row";
+  addRow.innerHTML = "<input type='text' placeholder='Add what you did / plan to do…'><button>Add</button>";
+  var input = addRow.querySelector("input"), addBtn = addRow.querySelector("button");
+  function addTask(){
+    var v = input.value.trim(); if(!v) return;
+    var item = {id:uid(), text:v, done:false, path:null};
+    ds.tasks.push(item); saveState();
+    list.appendChild(buildTaskRow(item, function(){ saveState(); refreshDayProgress(key); renderGarden(); }, true, function(){
+      ds.tasks = ds.tasks.filter(function(t){ return t.id!==item.id; });
+      saveState(); refreshDayProgress(key); renderGarden();
+    }));
+    input.value = "";
+    refreshDayProgress(key); renderGarden();
+  }
+  addBtn.addEventListener("click", addTask);
+  input.addEventListener("keydown", function(e){ if(e.key==="Enter") addTask(); });
+  body.appendChild(addRow);
+
+  var repsLabel = document.createElement("div"); repsLabel.className = "field-label"; repsLabel.textContent = "Reps / questions done today";
+  body.appendChild(repsLabel);
+  var repsRow = document.createElement("div"); repsRow.className = "reps-row";
+  var repsInput = document.createElement("input");
+  repsInput.type = "number"; repsInput.min = "0"; repsInput.placeholder = "0"; repsInput.value = ds.reps || "";
+  repsInput.addEventListener("input", function(){ ds.reps = repsInput.value; saveState(); });
+  repsRow.appendChild(repsInput);
+  body.appendChild(repsRow);
+
+  var notesLabel = document.createElement("div"); notesLabel.className = "field-label"; notesLabel.textContent = "What I actually did";
+  body.appendChild(notesLabel);
+  var notes = document.createElement("textarea"); notes.className = "notes-input";
+  notes.placeholder = "e.g. solved 24 paper, watched strategy video 2, error log for 24 paper…";
+  notes.value = ds.notes || "";
+  notes.addEventListener("input", function(){ ds.notes = notes.value; saveState(); });
+  body.appendChild(notes);
+
+  card.appendChild(body);
+  return card;
+}
+function refreshDayProgress(key){
+  var counts = dayItemCounts(key);
+  var el = document.querySelector("[data-progress='"+key+"']");
+  if(el) el.textContent = counts.done+"/"+counts.total;
+}
+
+/* ================= EXPORT / IMPORT ================= */
+document.getElementById("exportBtn").addEventListener("click", function(){
+  var blob = new Blob([JSON.stringify(state,null,2)], {type:"application/json"});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url; a.download = "prep-tracker-backup-"+iso(new Date())+".json";
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+});
+document.getElementById("importBtn").addEventListener("click", function(){ document.getElementById("importFile").click(); });
+document.getElementById("importFile").addEventListener("change", function(e){
+  var file = e.target.files[0]; if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(){
+    try{
+      var data = JSON.parse(reader.result);
+      if(data && data.days){ state = migrate(data); saveState(); renderAll(); alert("Backup imported."); }
+      else { alert("That file doesn't look like a valid backup."); }
+    }catch(err){ alert("Couldn't read that file."); }
+  };
+  reader.readAsText(file);
+});
+document.getElementById("jumpToday").addEventListener("click", function(){
+  var el = document.getElementById("day-"+iso(TODAY));
+  if(el){ el.classList.add("open"); el.scrollIntoView({behavior:"smooth", block:"center"}); }
+});
+
+
+/* ---------- EXTRA NIGHT COURT PROGRESS / MOTIVATION ---------- */
+function updateNightCourtProgress(){
+  var n=totalDoneOverall();
+  var p=Math.min(100,Math.round(n/60*100));
+  var f=document.getElementById('ncFill');
+  var c=document.getElementById('ncCaption');
+  if(f) f.style.width=p+'%';
+  if(c) c.textContent = n===0 ? 'The castle gates are waiting. One tiny task is enough. 🏰' :
+    n<5 ? n+' little piece'+(n===1?'':'s')+' of magic collected. ✨' :
+    n<20 ? 'The library is opening hidden shelves. '+n+' tasks conquered. 📚' :
+    n<60 ? 'Your study realm is becoming formidable. '+n+' tasks in the hoard. 🐉' :
+    'The Night Court library is glowing. You are on a roll. 🌙';
+  updateLevelAndAchievements(n);
+}
+var ncDragonEl=document.getElementById('ncDragon');
+if(ncDragonEl){
+  ncDragonEl.addEventListener('click',function(){
+    var tip=this.querySelector('.nc-tip');
+    var lines=['🐉 The dragon says: five minutes counts. Start.','🐈‍⬛ A library cat has brought you an imaginary blanket. Now study.','🌙 Feyre says: one page. Then another.','🪽 Rhysand’s only demand is that you keep going.','📚 The library has room for one more completed task.'];
+    tip.textContent=lines[Math.floor(Math.random()*lines.length)];
+    tip.style.display='block';
+    setTimeout(function(){tip.style.display='none';},2400);
+  });
+}
+setInterval(updateNightCourtProgress,1200);
+
+/* ---------- LEVELS ---------- */
+var LEVELS=[
+  {min:0,   name:"Apprentice"},
+  {min:5,   name:"Scholar"},
+  {min:20,  name:"Keeper of the Archives"},
+  {min:60,  name:"Master of the Library"},
+  {min:120, name:"High Scholar"},
+  {min:200, name:"Ruler of the Realm"}
+];
+var ACHIEVEMENTS=[
+  {id:"first", icon:"🌟", label:"First Spell — complete your first task", test:function(n,streak){return n>=1;}},
+  {id:"ten",   icon:"📚", label:"Keeper of Knowledge — 10 tasks conquered", test:function(n,streak){return n>=10;}},
+  {id:"streak7", icon:"🔥", label:"Unbreakable — 7-day streak", test:function(n,streak){return streak>=7;}},
+  {id:"night", icon:"🌙", label:"Night Scholar — study after 9 PM", test:function(n,streak){return new Date().getHours()>=21;}},
+  {id:"fifty", icon:"👑", label:"High Scholar — 50 tasks conquered", test:function(n,streak){return n>=50;}},
+  {id:"hundred", icon:"✨", label:"The Stars Remember — 100 tasks conquered", test:function(n,streak){return n>=100;}}
+];
+function currentLevel(n){
+  var lvl=LEVELS[0];
+  LEVELS.forEach(function(l){ if(n>=l.min) lvl=l; });
+  return lvl;
+}
+function updateLevelAndAchievements(n){
+  var lvlEl=document.getElementById('levelBadge');
+  var xpEl=document.getElementById('xpBadge');
+  if(lvlEl) lvlEl.textContent = currentLevel(n).name;
+  if(xpEl) xpEl.textContent = (n*10)+" XP";
+  var achvRow=document.getElementById('achvRow');
+  if(achvRow && !achvRow.dataset.built){
+    achvRow.dataset.built="1";
+    ACHIEVEMENTS.forEach(function(a){
+      var span=document.createElement('span');
+      span.className='achv-badge'; span.id='achv-'+a.id; span.title=a.label; span.textContent=a.icon;
+      achvRow.appendChild(span);
+    });
+  }
+  if(achvRow){
+    var streak = computeStreak();
+    ACHIEVEMENTS.forEach(function(a){
+      var el=document.getElementById('achv-'+a.id);
+      if(el && a.test(n,streak)) el.classList.add('unlocked');
+    });
+  }
+}
+
+/* ---------- QUOTE OF THE REALM (original lines only) ---------- */
+var REALM_QUOTES=[
+  {text:"The stars are waiting. So is your next chapter.", by:"the realm"},
+  {text:"Study now. Rule the library later.", by:"the realm"},
+  {text:"Every page is another step toward the life you are building.", by:"the realm"},
+  {text:"You do not need to see the whole path. Only the next step.", by:"the realm"},
+  {text:"A little progress is still progress, darling.", by:"the realm"},
+  {text:"Tonight, we study beneath the stars.", by:"the realm"},
+  {text:"Your story is not finished yet.", by:"the realm"},
+  {text:"Even the darkest night eventually gives way to dawn.", by:"the realm"},
+  {text:"You have survived worse than an unfinished study session.", by:"a High Lord, probably"},
+  {text:"One page. Then another. That's how mountains are climbed.", by:"a girl who painted her way out of the dark"},
+  {text:"The Night Court believes in you. Unfortunately, your textbook does too.", by:"the Night Court"},
+  {text:"The library has noticed your absence.", by:"the realm"},
+  {text:"Your enemies are studying.", by:"the realm"},
+  {text:"You really want to lose a battle to Chapter 7?", by:"the realm"},
+  {text:"The books demand sacrifice. Preferably snacks.", by:"a cat, probably"},
+  {text:"Even the fiercest court started with one small step.", by:"the realm"},
+  {text:"The candle does not mind burning, if it lights your way.", by:"the realm"}
+];
+var quoteIdx=0;
+function showRealmQuote(idx){
+  var t=document.getElementById('quoteText');
+  var a=document.getElementById('quoteAttrib');
+  if(!t||!a) return;
+  t.style.opacity=0;
+  setTimeout(function(){
+    t.textContent = REALM_QUOTES[idx].text;
+    a.textContent = "— "+REALM_QUOTES[idx].by;
+    t.style.opacity=1;
+  }, 180);
+}
+var randomQuoteBtnEl=document.getElementById('randomQuoteBtn');
+if(randomQuoteBtnEl){
+  randomQuoteBtnEl.addEventListener('click', function(){
+    var next; do{ next=Math.floor(Math.random()*REALM_QUOTES.length); }while(next===quoteIdx && REALM_QUOTES.length>1);
+    quoteIdx=next;
+    showRealmQuote(quoteIdx);
+  });
+}
+(function(){ quoteIdx=Math.floor(Math.random()*REALM_QUOTES.length); showRealmQuote(quoteIdx); })();
+
+/* ================= UNDO BUTTON ================= */
+var undoBtnEl = document.getElementById("undoBtn");
+if(undoBtnEl){
+  undoBtnEl.addEventListener("click", undoLastChange);
+}
+updateUndoButton();
+
+/* ================= INIT ================= */
+function renderAll(){
+  renderExamDates();
+  renderPriorityTables();
+  renderResources();
+  renderScoreTally();
+  renderMonths();
+  renderGarden();
+  updateNightCourtProgress();
+}
+renderAll();
+window.addEventListener("load", function(){
+  setTimeout(function(){
+    var el = document.getElementById("day-"+iso(TODAY));
+    if(el) el.scrollIntoView({behavior:"auto", block:"center"});
+  }, 60);
+});
+})();
+</script>
+
+<script>
+window.addEventListener("DOMContentLoaded", function(){
+  const btn = document.getElementById("syncNowBtn");
+  if (btn) btn.addEventListener("click", manualCloudSync);
+  initCloudSync();
+});
+</script>
+
+</body>
+</html>
