@@ -662,7 +662,7 @@
     background:#efe8ff;font:600 12px system-ui,sans-serif;">📱 Devices</button>
   <div id="syncCodeBox" style="display:none;width:100%;padding:7px 8px;background:#faf8ff;border-radius:10px;font-size:11px;line-height:1.4;">
     <b>Device sync code:</b> <span id="syncCodeValue"></span><br>
-    Open this tracker on your iPad/phone/laptop and use the <b>same code</b>.
+    All copies use the same shared code by default: <b>become-the-professor-shared</b>.
     <button id="changeSyncCodeBtn" type="button" style="margin-top:5px;border:0;background:none;color:#6f4aa8;font-weight:700;cursor:pointer;padding:0;">Change code</button>
   </div>
 </div>
@@ -996,12 +996,10 @@ var TODAY = new Date(); TODAY.setHours(0,0,0,0);
 const SUPABASE_URL = "https://qbxyssijdudsjcztwjwi.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_VQ1OEpe22tANHFCCzKISpQ_te2kGULU";
 const SYNC_CODE_KEY = "spq_sync_code";
+const DEFAULT_SYNC_CODE = "become-the-professor-shared";
 function getSyncCode(){
   let code = localStorage.getItem(SYNC_CODE_KEY);
-  if(!code){
-    code = "realm-" + Math.random().toString(36).slice(2,8) + "-" + Math.random().toString(36).slice(2,6);
-    localStorage.setItem(SYNC_CODE_KEY, code);
-  }
+  if(!code){ code = DEFAULT_SYNC_CODE; localStorage.setItem(SYNC_CODE_KEY, code); }
   return code;
 }
 let SUPABASE_ROW_ID = getSyncCode();
@@ -1104,14 +1102,8 @@ async function pullCloudState(){
   const localStamp = localState && localState._localChangedAt
     ? Number(localState._localChangedAt) : 0;
 
-  /* Only a genuinely unsynced local edit may win over cloud. A clean local
-     cache must never overwrite cloud just because its device clock is ahead. */
-  if (localState && localStamp > 0) {
-    state = localState;
-    await pushCloudState();
-    return;
-  }
-
+  /* Cloud is authoritative when opening the tracker. Local edits are uploaded
+     by saveState(), so an old cache must never overwrite the shared copy here. */
   state = migrate(data.state);
   state._cloudUpdatedAt = cloudTime;
   state._localChangedAt = 0;
