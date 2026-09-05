@@ -1008,9 +1008,12 @@ let cloudClient = null;
 let cloudSyncEnabled = false;
 let cloudSyncTimer = null;
 let cloudSyncBusy = false;
+let cloudSyncRetryTimer = null;
+let cloudChannel = null;
 let lastCloudUpdatedAt = null;
-/* Poll cloud every 4 seconds as a reliable fallback for GitHub Pages/iPad/Safari. */
-const CLOUD_PULL_INTERVAL = 4000;
+let lastCloudStateHash = null;
+const CLOUD_PULL_INTERVAL = 3500;
+const CLOUD_RETRY_INTERVAL = 5000;
 
 function setSyncStatus(message, kind){
   const el = document.getElementById("syncStatus");
@@ -1022,163 +1025,206 @@ function setSyncStatus(message, kind){
 function setSyncButtonState(){
   const btn = document.getElementById("syncNowBtn");
   if (!btn) return;
-  btn.disabled = !cloudSyncEnabled || cloudSyncBusy;
+  btn.disabled = cloudSyncBusy;
   btn.textContent = cloudSyncBusy ? "☁️ Syncing…" : "☁️ Sync now";
 }
 
 function initSyncCodeUI(){
-  const code = getSyncCode();
   const value = document.getElementById("syncCodeValue");
   const box = document.getElementById("syncCodeBox");
   const show = document.getElementById("syncCodeBtn");
   const change = document.getElementById("changeSyncCodeBtn");
-  if(value) value.textContent = code;
+  if(value) value.textContent = getSyncCode();
   if(show) show.addEventListener("click", function(){
     if(box) box.style.display = box.style.display === "none" ? "block" : "none";
   });
-  if(change) change.addEventListener("click", function(){
-    const next = prompt("Enter the sync code you want to use on all your devices:", code);
+  if(change) change.addEventListener("click", async function(){
+    const current = getSyncCode();
+    const next = prompt("Enter the sync code you want to use on all your devices:", current);
     if(!next || !next.trim()) return;
     SUPABASE_ROW_ID = next.trim().replace(/\s+/g,"-").slice(0,80);
     localStorage.setItem(SYNC_CODE_KEY, SUPABASE_ROW_ID);
     if(value) value.textContent = SUPABASE_ROW_ID;
-    setSyncStatus("☁️ Code changed — sync now", "syncing");
+    lastCloudUpdatedAt = null;
+    lastCloudStateHash = null;
+    setSyncStatus("☁️ New device code — syncing…", "syncing");
+    if(cloudSyncEnabled) await reconcileCloud("code-change");
   });
 }
 
-async function pushCloudState(){
-  if (!cloudClient || !cloudSyncEnabled) {
-    throw new Error("Cloud sync is not connected.");
-  }
+function hashCloudState(value){
+  try { return JSON.stringify(value); } catch(e) { return ""; }
+}
 
+function markLocalChanged(){
+  /* Add a tiny random component so two saves in the same millisecond still differ. */
+  state._localChangedAt = Date.now();
+  state._localChangeId = String(state._localChangedAt) + "-" + Math.random().toString(36).slice(2);
+}
+
+function persistLocalState(){
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  catch(e) { console.error("Local save failed:", e); }
+}
+
+async function pushCloudState(){
+  if (!cloudClient) throw new Error("Supabase is not connected.");
+
+  const snapshot = JSON.parse(JSON.stringify(state));
+  const snapshotChangedAt = Number(snapshot._localChangedAt || 0);
   const now = new Date().toISOString();
-  const payloadState = JSON.parse(JSON.stringify(state));
-  payloadState._cloudUpdatedAt = now;
+  snapshot._cloudUpdatedAt = now;
 
   const { data, error } = await cloudClient
     .from("tracker_state")
     .upsert({
       id: SUPABASE_ROW_ID,
-      state: payloadState,
+      state: snapshot,
       updated_at: now
     }, { onConflict: "id" })
-    .select("updated_at")
+    .select("updated_at,state")
     .single();
 
-  if (error) throw error;
+  if(error) throw error;
 
   const cloudTime = (data && data.updated_at) || now;
-  state._cloudUpdatedAt = cloudTime;
-  state._localChangedAt = 0;
   lastCloudUpdatedAt = cloudTime;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  lastCloudStateHash = hashCloudState(snapshot);
+
+  /* Do NOT clear a newer edit made while the network request was running. */
+  if(Number(state._localChangedAt || 0) === snapshotChangedAt){
+    state._cloudUpdatedAt = cloudTime;
+    state._localChangedAt = 0;
+    state._localChangeId = "";
+    persistLocalState();
+  }
 }
 
-async function pullCloudState(){
-  if (!cloudClient || !cloudSyncEnabled) {
-    throw new Error("Cloud sync is not connected.");
-  }
-
+async function fetchCloudRow(){
+  if(!cloudClient) throw new Error("Supabase is not connected.");
   const { data, error } = await cloudClient
     .from("tracker_state")
     .select("id,state,updated_at")
     .eq("id", SUPABASE_ROW_ID)
     .maybeSingle();
+  if(error) throw error;
+  return data;
+}
 
-  if (error) throw error;
+async function pullCloudState(options){
+  options = options || {};
+  const data = await fetchCloudRow();
 
-  if (!data || !data.state) {
-    await pushCloudState();
-    return;
+  if(!data || !data.state){
+    /* First device: publish its existing local tracker instead of replacing it. */
+    if(Number(state._localChangedAt || 0) || options.publishIfEmpty !== false){
+      await pushCloudState();
+    }
+    return "pushed";
   }
 
   const cloudTime = data.updated_at || new Date().toISOString();
   const cloudStamp = new Date(cloudTime).getTime();
+  const localStamp = Number(state._localChangedAt || 0);
+  const incomingHash = hashCloudState(data.state);
 
-  let localState = null;
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    localState = raw ? migrate(JSON.parse(raw)) : null;
-  } catch(e) {}
+  /* Never overwrite an edit that has not reached the cloud yet. */
+  if(localStamp && localStamp > cloudStamp){
+    await pushCloudState();
+    return "pushed";
+  }
 
-  const localStamp = localState && localState._localChangedAt
-    ? Number(localState._localChangedAt) : 0;
+  /* Nothing changed remotely. Avoid unnecessary rerenders on every poll. */
+  if(lastCloudUpdatedAt === cloudTime && lastCloudStateHash === incomingHash){
+    return "unchanged";
+  }
 
-  /* Cloud is authoritative when opening the tracker. Local edits are uploaded
-     by saveState(), so an old cache must never overwrite the shared copy here. */
   state = migrate(data.state);
   state._cloudUpdatedAt = cloudTime;
   state._localChangedAt = 0;
+  state._localChangeId = "";
   lastCloudUpdatedAt = cloudTime;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  lastCloudStateHash = incomingHash;
+  persistLocalState();
   renderAll();
+  return "pulled";
+}
+
+async function reconcileCloud(reason){
+  if(!cloudClient) throw new Error("Supabase is not connected.");
+  if(cloudSyncBusy && reason !== "startup") return;
+
+  cloudSyncBusy = true;
+  setSyncButtonState();
+  setSyncStatus(reason === "startup" ? "☁️ Connecting…" : "☁️ Syncing…", "syncing");
+  try{
+    const result = await pullCloudState({publishIfEmpty:true});
+    setSyncStatus(result === "pushed" ? "☁️ Saved to cloud" : "☁️ Synced", "ok");
+    clearTimeout(cloudSyncRetryTimer);
+    return result;
+  }catch(err){
+    console.error("Cloud sync failed:", err);
+    const msg = err && err.message ? err.message : String(err);
+    setSyncStatus("⚠️ Sync failed — retrying", "error");
+    clearTimeout(cloudSyncRetryTimer);
+    cloudSyncRetryTimer = setTimeout(function(){
+      if(cloudSyncEnabled) reconcileCloud("retry");
+    }, CLOUD_RETRY_INTERVAL);
+    throw err;
+  }finally{
+    cloudSyncBusy = false;
+    setSyncButtonState();
+  }
 }
 
 async function initCloudSync(){
-  try {
-    if (!window.supabase || !window.supabase.createClient) {
+  try{
+    if(!window.supabase || !window.supabase.createClient){
       throw new Error("Supabase library did not load.");
     }
 
-    cloudClient = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
-    );
-
+    cloudClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     cloudSyncEnabled = true;
-    setSyncStatus("☁️ Connecting…", "syncing");
     setSyncButtonState();
+    await reconcileCloud("startup");
 
-    await pullCloudState();
-
-    cloudClient
-      .channel("tracker-state-sync")
+    /* Realtime gives instant updates when available. Polling remains the safety net. */
+    if(cloudChannel) try{ await cloudClient.removeChannel(cloudChannel); }catch(e){}
+    cloudChannel = cloudClient
+      .channel("tracker-state-sync-" + SUPABASE_ROW_ID)
       .on("postgres_changes", {
-        event: "*",
-        schema: "public",
-        table: "tracker_state",
-        filter: "id=eq." + SUPABASE_ROW_ID
-      }, payload => {
-        if (payload.eventType === "DELETE") return;
-
-        const remote = payload.new && payload.new.state;
-        const remoteTime = payload.new && payload.new.updated_at;
-        if (!remote) return;
-
-        const remoteStamp = remoteTime
-          ? new Date(remoteTime).getTime() : 0;
-        const localEditStamp = Number(state._localChangedAt || 0);
-
-        if (localEditStamp && localEditStamp > remoteStamp) return;
-
-        state = migrate(remote);
-        state._cloudUpdatedAt = remoteTime || new Date().toISOString();
-        state._localChangedAt = 0;
-        lastCloudUpdatedAt = state._cloudUpdatedAt;
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-        renderAll();
-        setSyncStatus("☁️ Synced", "ok");
-      })
-      .subscribe(status => {
-        if (status === "SUBSCRIBED") {
+        event:"*", schema:"public", table:"tracker_state",
+        filter:"id=eq." + SUPABASE_ROW_ID
+      }, async function(payload){
+        if(payload.eventType === "DELETE" || !payload.new || !payload.new.state) return;
+        if(Number(state._localChangedAt || 0)) return;
+        const incomingTime = payload.new.updated_at || "";
+        if(lastCloudUpdatedAt === incomingTime) return;
+        try{
+          await pullCloudState({publishIfEmpty:false});
           setSyncStatus("☁️ Synced", "ok");
-          setSyncButtonState();
-        }
+        }catch(err){ console.warn("Realtime sync failed:", err); }
+      })
+      .subscribe(function(status){
+        if(status === "SUBSCRIBED") setSyncStatus("☁️ Synced", "ok");
       });
 
-    /* Realtime is not reliable when an HTML file is opened locally, so also
-       poll the shared row. This makes iPad/Safari and desktop stay aligned. */
-    setInterval(async function(){
-      if (!cloudSyncEnabled || cloudSyncBusy || Number(state._localChangedAt || 0)) return;
-      try {
-        await pullCloudState();
+    clearInterval(window.__trackerCloudPoll);
+    window.__trackerCloudPoll = setInterval(async function(){
+      if(!cloudSyncEnabled || cloudSyncBusy || !navigator.onLine) return;
+      try{
+        await pullCloudState({publishIfEmpty:true});
         setSyncStatus("☁️ Synced", "ok");
-      } catch(err) {
-        console.warn("Cloud refresh failed:", err);
-      }
+      }catch(err){ console.warn("Cloud refresh failed:", err); }
     }, CLOUD_PULL_INTERVAL);
 
-  } catch(err) {
+    window.addEventListener("online", function(){
+      if(cloudSyncEnabled) reconcileCloud("online").catch(function(){});
+    });
+    document.addEventListener("visibilitychange", function(){
+      if(!document.hidden && cloudSyncEnabled) reconcileCloud("return").catch(function(){});
+    });
+  }catch(err){
     console.error("Cloud sync setup failed:", err);
     cloudSyncEnabled = false;
     setSyncStatus("⚠️ Cloud sync unavailable", "error");
@@ -1187,70 +1233,43 @@ async function initCloudSync(){
 }
 
 function scheduleCloudSave(){
-  if (!cloudSyncEnabled) return;
-
+  if(!cloudClient) return;
   clearTimeout(cloudSyncTimer);
-  cloudSyncTimer = setTimeout(async () => {
-    if (cloudSyncBusy) {
-      scheduleCloudSave();
-      return;
-    }
-
+  cloudSyncTimer = setTimeout(async function(){
+    if(cloudSyncBusy){ scheduleCloudSave(); return; }
     cloudSyncBusy = true;
     setSyncButtonState();
     setSyncStatus("☁️ Saving…", "syncing");
-
-    try {
+    try{
       await pushCloudState();
       setSyncStatus("☁️ Synced", "ok");
-    } catch(err) {
+    }catch(err){
       console.error("Cloud save failed:", err);
-      setSyncStatus("⚠️ Save failed — local copy kept", "error");
-    } finally {
+      setSyncStatus("⚠️ Save failed — retrying", "error");
+      clearTimeout(cloudSyncRetryTimer);
+      cloudSyncRetryTimer = setTimeout(function(){
+        if(cloudSyncEnabled) reconcileCloud("retry").catch(function(){});
+      }, CLOUD_RETRY_INTERVAL);
+    }finally{
       cloudSyncBusy = false;
       setSyncButtonState();
     }
-  }, 700);
+  }, 500);
 }
 
 async function manualCloudSync(){
-  if (!cloudSyncEnabled || cloudSyncBusy) return;
-
-  cloudSyncBusy = true;
-  setSyncButtonState();
-  setSyncStatus("☁️ Syncing…", "syncing");
-
-  try {
-    const localStamp = Number(state._localChangedAt || 0);
-    const cloudStamp = lastCloudUpdatedAt
-      ? new Date(lastCloudUpdatedAt).getTime() : 0;
-
-    if (localStamp > cloudStamp) {
-      await pushCloudState();
-      renderAll();
-      setSyncStatus("☁️ Saved to cloud", "ok");
-    } else {
-      await pullCloudState();
-      setSyncStatus("☁️ Synced", "ok");
-    }
-  } catch(err) {
-    console.error("Manual cloud sync failed:", err);
-    setSyncStatus("⚠️ Sync failed — local copy kept", "error");
-  } finally {
-    cloudSyncBusy = false;
-    setSyncButtonState();
+  if(!cloudClient){
+    setSyncStatus("⚠️ Cloud sync unavailable", "error");
+    return;
   }
+  if(cloudSyncBusy) return;
+  try{ await reconcileCloud("manual"); }
+  catch(err){}
 }
 
 function cloudAwareSaveState(){
-  state._localChangedAt = Date.now();
-
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch(e) {
-    console.error("Local save failed:", e);
-  }
-
+  markLocalChanged();
+  persistLocalState();
   scheduleCloudSave();
 }
 
@@ -2051,6 +2070,7 @@ window.addEventListener("load", function(){
 window.addEventListener("DOMContentLoaded", function(){
   const btn = document.getElementById("syncNowBtn");
   if (btn) btn.addEventListener("click", manualCloudSync);
+  initSyncCodeUI();
   initCloudSync();
 });
 </script>
